@@ -6,10 +6,17 @@ using UserService.Entities;
 namespace UserService.Data
 {
     public class DataContext : DbContext
+
     {
-        public DataContext (DbContextOptions<DataContext> options)
-            : base(options)
+        protected readonly IConfiguration Configuration;
+        public DataContext(IConfiguration configuration)
         {
+            Configuration = configuration;
+             }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            // connect to sql server database
+           options.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
         }
 
         public DbSet<User> User { get; set; } = default!;
