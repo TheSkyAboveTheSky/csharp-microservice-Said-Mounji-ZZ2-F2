@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using UserService.Data;
+using UserService.Entities;
 
 namespace UserService.Controllers
 {
@@ -10,31 +13,18 @@ namespace UserService.Controllers
   [ApiController]
   public class UserController : ControllerBase
   {
+    private readonly DataContext _context;
+
+    public UserController(DataContext context)
+    {
+      _context = context;
+    }
     [HttpGet]
-    public ActionResult<IEnumerable<string>> Get()
+    public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
-      return new string[] { "value1", "value2" };
+      return Ok(await _context.User.ToListAsync());
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<string> Get(int id)
-    {
-      return "value";
-    }
 
-    [HttpPost]
-    public void Post([FromBody] string value)
-    {
-    }
-
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
-    }
   }
 }
