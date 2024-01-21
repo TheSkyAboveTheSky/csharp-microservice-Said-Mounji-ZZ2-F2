@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\FrontAppBlazor.bundle.scp.css",
+      "PackagePath": "staticwebassets\\FrontAppBlazor.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.FrontAppBlazor.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.FrontAppBlazor.props",
+      "PackagePath": "build\\FrontAppBlazor.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.FrontAppBlazor.props",
+      "PackagePath": "buildMultiTargeting\\FrontAppBlazor.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.FrontAppBlazor.props",
+      "PackagePath": "buildTransitive\\FrontAppBlazor.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
