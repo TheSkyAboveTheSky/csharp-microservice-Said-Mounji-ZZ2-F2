@@ -97,7 +97,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(UserLogin userlogin)
+        public async Task<ActionResult<UserToken>> Login(UserLogin userlogin)
         {
             var userFromDb = await _context.User.FirstOrDefaultAsync(u => u.Email == userlogin.Email);
 
@@ -110,7 +110,12 @@ namespace UserService.Controllers
 
             if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
-                return Ok(userFromDb);
+                var token = GenerateJwtToken(userFromDb.Id);
+                var userToken = new UserToken{
+                    User = userFromDb,
+                    Token = token
+                };
+                return Ok(userToken);
             }
 
             return NotFound();
