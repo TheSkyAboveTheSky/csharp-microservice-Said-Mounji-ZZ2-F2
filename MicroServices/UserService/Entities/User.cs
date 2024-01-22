@@ -50,4 +50,9 @@ namespace UserService.Entities
         public required string Email { get; set; }
         public required string Pass { get; set; }
     }
+    public class UserToken
+    {
+        public User User {get; set;}
+        public string Token { get; set; }
+    }
 }
