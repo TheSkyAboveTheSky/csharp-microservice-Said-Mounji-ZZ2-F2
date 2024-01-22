@@ -10,7 +10,7 @@ using UserService.Data;
 namespace UserService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240121215045_Init")]
+    [Migration("20240122181906_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -21,9 +21,8 @@ namespace UserService.Migrations
 
             modelBuilder.Entity("UserService.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()

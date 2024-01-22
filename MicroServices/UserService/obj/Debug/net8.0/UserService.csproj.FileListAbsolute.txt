@@ -161,3 +161,4 @@ C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroSer
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\UserService\obj\Debug\net8.0\UserService.pdb
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\UserService\obj\Debug\net8.0\UserService.genruntimeconfig.cache
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\UserService\obj\Debug\net8.0\ref\UserService.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\UserService\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
