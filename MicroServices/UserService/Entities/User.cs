@@ -1,27 +1,32 @@
-using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace UserService.Entities
 {
-    public class User(int id, string nom, string prenom, string email, string pass)
+    public class User
     {
-        public int Id { get; set; } = id;
-        public string Prenom { get; set; } = prenom;
-        public string Nom { get; set; } = nom;
-        public string Email { get; set; } = email;
-        public string Pass { get; private set; } = pass;
-        public string NomComplet => Nom + " " + Prenom;
+        public User()
+        {
+            Id = "user-" + Guid.NewGuid().ToString().Substring(0,6);
+            Prenom = "";
+            Nom = "";
+            Email = "";
+            Pass = "";
+        }
 
-        public void ChangePass()
+        public User(string id, string nom, string prenom, string email, string pass)
         {
-            this.Pass = "muchSecure";
+            Id = "user" + Guid.NewGuid().ToString().Substring(0,6);
+            Prenom = prenom;
+            Nom = nom;
+            Email = email;
+            Pass = pass;
         }
-        public bool IsPassSecure()
-        {
-            if(Pass.Length > 6)
-            {
-                return true;
-            }
-            return false;
-        }
+
+        public string Id { get; set; }
+        public string Prenom { get; set; }
+        public string Nom { get; set; }
+        public string Email { get; set; }
+        public string Pass { get; private set; }
+        public string NomComplet => Nom + " " + Prenom;
     }
 }

@@ -14,8 +14,7 @@ namespace UserService.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
                     Prenom = table.Column<string>(type: "TEXT", nullable: false),
                     Nom = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),

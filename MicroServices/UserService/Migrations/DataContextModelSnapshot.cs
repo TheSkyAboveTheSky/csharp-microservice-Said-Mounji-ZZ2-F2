@@ -18,9 +18,8 @@ namespace UserService.Migrations
 
             modelBuilder.Entity("UserService.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
