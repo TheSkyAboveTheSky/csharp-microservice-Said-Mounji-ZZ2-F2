@@ -57,10 +57,20 @@ namespace UserService.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
+            if (await IsEmailUnique(user.Email))
+            {
+                _context.User.Add(user);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+                return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            }
+
+            return Conflict("Email must be unique.");
+        }
+
+        private async Task<bool> IsEmailUnique(string email)
+        {
+            return !await _context.User.AnyAsync(u => u.Email == email);
         }
     }
 }
