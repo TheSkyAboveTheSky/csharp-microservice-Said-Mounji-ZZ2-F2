@@ -13,7 +13,7 @@ Sur le front:
 - [ ] Faire une page pour afficher un visuel de votre second micro service ( liste de tâches )
 
 Sur la gateway:
-- [ ] Créer la route register pour le user 
+- [X] Créer la route register pour le user 
 - [ ] Verifier que le user / pass ne comporte que des caractère alphanumérique.
 - [ ] Ajouter un controller pour le second micro service qui relaie les appel
 
@@ -27,9 +27,9 @@ Sur le front:
 - [ ] Pouvoir mettre à jour un todo
 
 Sur la gateway:
-- [ ] Ajouter la gestion du JWT
+- [X] Ajouter la gestion du JWT
 - [ ] Ajouter le JWT au swagger
-- [ ] Rendre certaine route [Authorized]
+- [X] Rendre certaine route [Authorized]
 - [ ] Récuperer l'id de l'utilisateur dur les route authentifié
 - [ ] Transmettre l'id au micro service todo pour ne récuperer que les données concernant notre utilisateur
 
