@@ -42,7 +42,12 @@ namespace UserService.Entities
         public string Prenom { get; set; }
         public string Nom { get; set; }
         public string Email { get; set; }
-        public string Pass { get; private set; }
+        public string Pass { get; set; }
         public string NomComplet => Nom + " " + Prenom;
+    }
+    public class UserLogin
+    {
+        public required string Email { get; set; }
+        public required string Pass { get; set; }
     }
 }
