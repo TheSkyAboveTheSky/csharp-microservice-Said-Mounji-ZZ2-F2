@@ -68,11 +68,14 @@ namespace UserService.Controllers
 
             return NoContent();
         }
-        [HttpPost]
+
+        [HttpPost("register")]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
             if (await IsEmailUnique(user.Email))
             {
+                user.Pass = _passwordHasher.HashPassword(user, user.Pass);
+
                 _context.User.Add(user);
                 await _context.SaveChangesAsync();
 
@@ -80,17 +83,6 @@ namespace UserService.Controllers
             }
 
             return Conflict("Email must be unique.");
-        }
-
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> RegisterUser(User user)
-        {
-            user.Pass = _passwordHasher.HashPassword(user, user.Pass);
-
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login(UserLogin userlogin)
