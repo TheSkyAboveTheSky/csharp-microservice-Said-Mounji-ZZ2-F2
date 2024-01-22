@@ -19,12 +19,49 @@ namespace UserService.Controllers
     {
       _context = context;
     }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
       return Ok(await _context.User.ToListAsync());
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User>> GetUserById(int id)
+    {
+      var user = await _context.User.FindAsync(id);
 
+      if (user == null)
+      {
+        return NotFound();
+      }
+
+      return user;
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUserById(int id)
+    {
+      var user = await _context.User.FindAsync(id);
+
+      if (user == null)
+      {
+        return NotFound();
+      }
+
+      _context.User.Remove(user);
+      await _context.SaveChangesAsync();
+
+      return NoContent();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<User>> CreateUser(User user)
+    {
+      _context.User.Add(user);
+      await _context.SaveChangesAsync();
+
+      return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+    }
   }
 }
