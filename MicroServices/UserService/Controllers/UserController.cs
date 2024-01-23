@@ -43,7 +43,7 @@ namespace UserService.Controllers
 
             return user;
         }
-        [Authorize]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserById(string id)
         {
@@ -87,7 +87,8 @@ namespace UserService.Controllers
                 await _context.SaveChangesAsync();
 
                 var token = GenerateJwtToken(user.Id);
-                var userToken = new UserToken{
+                var userToken = new UserToken
+                {
                     User = user,
                     Token = token
                 };
@@ -112,7 +113,8 @@ namespace UserService.Controllers
             if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
                 var token = GenerateJwtToken(userFromDb.Id);
-                var userToken = new UserToken{
+                var userToken = new UserToken
+                {
                     User = userFromDb,
                     Token = token
                 };
