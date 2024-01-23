@@ -1,14 +1,11 @@
 ﻿@inherits LayoutComponentBase
-<div>
-  <header>
-    <!-- Add your header content here -->
-  </header>
 
-  <main>
+<div class="main-layout">
+  <div class="nav-menu">
+    <NavMenu />
+  </div>
+  <div class="content">
     @Body
-  </main>
-
-  <footer>
-    <!-- Add your footer content here -->
-  </footer>
+  </div>
 </div>
+
