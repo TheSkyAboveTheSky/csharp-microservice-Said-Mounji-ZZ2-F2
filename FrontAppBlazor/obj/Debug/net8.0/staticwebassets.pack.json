@@ -1,10 +1,6 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\FrontAppBlazor.bundle.scp.css",
-      "PackagePath": "staticwebassets\\FrontAppBlazor.bundle.scp.css"
-    },
-    {
       "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },

@@ -19,10 +19,7 @@ C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontApp
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.FrontAppBlazor.props
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.FrontAppBlazor.props
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
-C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\scopedcss\bundle\FrontAppBlazor.styles.css
-C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\scopedcss\projectbundle\FrontAppBlazor.bundle.scp.css
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\FrontAppBlazor.dll
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\refint\FrontAppBlazor.dll
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\FrontAppBlazor.pdb
