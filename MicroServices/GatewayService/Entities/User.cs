@@ -1,10 +1,10 @@
 using System.Text.RegularExpressions;
 
-namespace UserService.Entities
+namespace GatewayService.Entities
 {
     public class User
     {
-        public User(string nom, string prenom, string email, string pass, string username)
+        public User(string nom, string prenom, string email, string pass,string username)
         {
             ValidatePassword(pass);
             ValidateEmail(email);
@@ -13,7 +13,7 @@ namespace UserService.Entities
             Nom = nom;
             Email = email;
             Pass = pass;
-            Username = username;
+            UserName = username;
         }
         private string GenerateUserId()
         {
@@ -55,8 +55,8 @@ namespace UserService.Entities
         public string? Nom { get; set; }
         public string Email { get; set; }
         public string Pass { get; set; }
-        public string? Username { get; set; }
         public string NomComplet => Nom + " " + Prenom;
+        public string UserName { get; set; }
     }
     public class UserLogin
     {
