@@ -60,8 +60,7 @@ namespace GatewayService.Controllers
 
       if (response.IsSuccessStatusCode)
       {
-        var user = await response.Content.ReadFromJsonAsync<Entities.User>();
-        return Ok(user);
+        return Ok();
       }
       else
       {
@@ -77,13 +76,47 @@ namespace GatewayService.Controllers
 
       if (response.IsSuccessStatusCode)
       {
-        var user = await response.Content.ReadFromJsonAsync<Entities.User>();
-        return Ok(user);
+        return Ok();
       }
       else
       {
         return BadRequest("DeleteUserById failed");
       }
     }
+    [HttpPost("register")]
+    public async Task<ActionResult> CreateUser(User user)
+    {
+      HttpResponseMessage response = await client.PostAsJsonAsync($"api/User/register", user);
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        var createdUserToken = await response.Content.ReadFromJsonAsync<Entities.UserToken>();
+        return Ok(createdUserToken);
+      }
+      else
+      {
+        return BadRequest("CreateUser failed");
+      }
+    }
+    [HttpPost("login")]
+    public async Task<ActionResult> LoginUser(UserLogin userLogin)
+    {
+      HttpResponseMessage response = await client.PostAsJsonAsync($"api/User/login", userLogin);
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        var createdUserToken = await response.Content.ReadFromJsonAsync<Entities.UserToken>();
+        return Ok(createdUserToken);
+      }
+      else
+      {
+        return BadRequest("LoginUser failed");
+      }
+    }
   }
+
 }

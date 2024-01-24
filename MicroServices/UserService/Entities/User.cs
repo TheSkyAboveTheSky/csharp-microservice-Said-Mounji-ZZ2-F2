@@ -26,18 +26,8 @@ namespace UserService.Entities
             {
                 throw new ArgumentException("Password must be at least 6 characters long.", nameof(password));
             }
-
-            if (!IsAlphanumeric(password))
-            {
-                throw new ArgumentException("Password must be alphanumeric.", nameof(password));
-            }
         }
 
-        private bool IsAlphanumeric(string value)
-        {
-            var regex = new Regex("^[a-zA-Z0-9]*$");
-            return regex.IsMatch(value);
-        }
         private void ValidateEmail(string email)
         {
             if (!IsValidEmail(email))
