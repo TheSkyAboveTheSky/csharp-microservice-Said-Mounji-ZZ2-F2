@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using UserService.Entities;
 
 namespace UserService.Data
