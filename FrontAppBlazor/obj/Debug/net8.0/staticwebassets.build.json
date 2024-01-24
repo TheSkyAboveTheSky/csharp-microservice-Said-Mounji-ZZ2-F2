@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RvmQqWgrTQTgVbgPwg2LS3hoXhI/9C5uRqz3mhaKk5U=",
+  "Hash": "YdfF7/thD+VvrkyMrfGirG4t+Vv/tJeFDhBqlL0QN9E=",
   "Source": "FrontAppBlazor",
   "BasePath": "_content/FrontAppBlazor",
   "Mode": "Default",
@@ -16,44 +16,6 @@
     }
   ],
   "Assets": [
-    {
-      "Identity": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\bundle\\FrontAppBlazor.styles.css",
-      "SourceId": "FrontAppBlazor",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
-      "BasePath": "_content/FrontAppBlazor",
-      "RelativePath": "FrontAppBlazor.styles.css",
-      "AssetKind": "All",
-      "AssetMode": "CurrentProject",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "ScopedCss",
-      "AssetTraitValue": "ApplicationBundle",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\bundle\\FrontAppBlazor.styles.css"
-    },
-    {
-      "Identity": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\FrontAppBlazor.bundle.scp.css",
-      "SourceId": "FrontAppBlazor",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
-      "BasePath": "_content/FrontAppBlazor",
-      "RelativePath": "FrontAppBlazor.bundle.scp.css",
-      "AssetKind": "All",
-      "AssetMode": "Reference",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "ScopedCss",
-      "AssetTraitValue": "ProjectBundle",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\FrontAppBlazor.bundle.scp.css"
-    },
     {
       "Identity": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\app.css",
       "SourceId": "FrontAppBlazor",
@@ -129,6 +91,44 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.png"
+    },
+    {
+      "Identity": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\signin.jpg",
+      "SourceId": "FrontAppBlazor",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\",
+      "BasePath": "_content/FrontAppBlazor",
+      "RelativePath": "signin.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\signin.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\signup.jpg",
+      "SourceId": "FrontAppBlazor",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\",
+      "BasePath": "_content/FrontAppBlazor",
+      "RelativePath": "signup.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\signup.jpg"
     }
   ]
 }

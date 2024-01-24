@@ -1,6 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using UserService.Data;
 using UserService.Entities;
 
@@ -22,7 +27,8 @@ namespace UserService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return Ok(await _context.User.ToListAsync());
+            var users = await _context.User.ToListAsync();
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
@@ -53,6 +59,7 @@ namespace UserService.Controllers
 
             return NoContent();
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteAllUsers()
         {
@@ -79,13 +86,20 @@ namespace UserService.Controllers
                 _context.User.Add(user);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+                var token = GenerateJwtToken(user.Id);
+                var userToken = new UserToken
+                {
+                    User = user,
+                    Token = token
+                };
+                return Ok(userToken);
             }
 
             return Conflict("Email must be unique.");
         }
+
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(UserLogin userlogin)
+        public async Task<ActionResult<UserToken>> Login(UserLogin userlogin)
         {
             var userFromDb = await _context.User.FirstOrDefaultAsync(u => u.Email == userlogin.Email);
 
@@ -93,20 +107,46 @@ namespace UserService.Controllers
             {
                 return NotFound();
             }
+
             var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(userFromDb, userFromDb.Pass, userlogin.Pass);
 
             if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
-                return Ok(userFromDb);
+                var token = GenerateJwtToken(userFromDb.Id);
+                var userToken = new UserToken
+                {
+                    User = userFromDb,
+                    Token = token
+                };
+                return Ok(userToken);
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return NotFound();
         }
+
         private async Task<bool> IsEmailUnique(string email)
         {
             return !await _context.User.AnyAsync(u => u.Email == email);
+        }
+
+        private string GenerateJwtToken(string userId)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim("UserId", userId)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecretKeyLongLongLongLongEnough"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: "TodoProject",
+                audience: "localhost:5000",
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(3000),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
