@@ -4,9 +4,14 @@ namespace TaskService.Entities
     {
         public Task(string titre, string description, string userId)
         {
+            Id = GenerateUserId();
             Titre = titre;
             Description = description;
             UserId = userId;
+        }
+        private string GenerateUserId()
+        {
+            return "task-" + Guid.NewGuid().ToString().Substring(0, 6);
         }
         public string Id { get; set; }
         public string Titre { get; set; }

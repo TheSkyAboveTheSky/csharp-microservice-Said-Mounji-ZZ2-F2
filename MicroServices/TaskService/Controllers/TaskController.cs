@@ -1,3 +1,4 @@
+using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskService.Data;
@@ -22,12 +23,6 @@ namespace TaskService.controllers
       var tasks = await _context.Task.ToListAsync();
       return Ok(tasks);
     }
-    [HttpGet("/user/{userId}")]
-    public async Task<ActionResult<IEnumerable<System.Threading.Tasks.Task>>> GetUserTasks(string userId)
-    {
-      var tasks = await _context.Task.Where(t => t.UserId == userId).ToListAsync();
-      return Ok(tasks);
-    }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<System.Threading.Tasks.Task>> GetTaskById(string id)
@@ -41,6 +36,13 @@ namespace TaskService.controllers
 
       return Ok(task);
     }
+    [HttpGet("user/{userId}")]
+    public async Task<ActionResult<IEnumerable<System.Threading.Tasks.Task>>> GetUserTasks(string userId)
+    {
+      var tasks = await _context.Task.Where(t => t.UserId == userId).ToListAsync();
+      return Ok(tasks);
+    }
+
     [HttpDelete]
     public async Task<IActionResult> DeleteAllTasks()
     {
