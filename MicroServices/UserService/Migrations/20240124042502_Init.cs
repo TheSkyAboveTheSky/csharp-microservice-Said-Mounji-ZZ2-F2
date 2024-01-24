@@ -15,10 +15,11 @@ namespace UserService.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Prenom = table.Column<string>(type: "TEXT", nullable: false),
-                    Nom = table.Column<string>(type: "TEXT", nullable: false),
+                    Prenom = table.Column<string>(type: "TEXT", nullable: true),
+                    Nom = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Pass = table.Column<string>(type: "TEXT", nullable: false)
+                    Pass = table.Column<string>(type: "TEXT", nullable: false),
+                    Username = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
