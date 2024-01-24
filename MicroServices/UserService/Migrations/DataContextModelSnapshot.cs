@@ -26,7 +26,6 @@ namespace UserService.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nom")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Pass")
@@ -34,7 +33,9 @@ namespace UserService.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Prenom")
-                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
