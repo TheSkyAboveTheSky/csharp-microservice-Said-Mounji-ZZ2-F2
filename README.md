@@ -7,15 +7,15 @@ Présentation : https://docs.google.com/presentation/d/1JN1UweJbJxXI2r3MYdZYrkFs
 Les objectifs sont les suivants.
 
 Sur le front:
-- [ ] Créer une page d'inscription
+- [X] Créer une page d'inscription
 - [ ] Modifier le login pour que le front communique avec la gateway et appel la route de login
 - [ ] Faire que la page d'inscription appel la gateway
 - [ ] Faire une page pour afficher un visuel de votre second micro service ( liste de tâches )
 
 Sur la gateway:
 - [X] Créer la route register pour le user 
-- [ ] Verifier que le user / pass ne comporte que des caractère alphanumérique.
-- [ ] Ajouter un controller pour le second micro service qui relaie les appel
+- [X] Verifier que le user / pass ne comporte que des caractère alphanumérique.
+- [X] Ajouter un controller pour le second micro service qui relaie les appel
 
 # Séance 3
 
@@ -30,7 +30,7 @@ Sur la gateway:
 - [X] Ajouter la gestion du JWT
 - [ ] Ajouter le JWT au swagger
 - [X] Rendre certaine route [Authorized]
-- [ ] Récuperer l'id de l'utilisateur dur les route authentifié
+- [ ] Récuperer l'id de l'utilisateur sur les route authentifié
 - [ ] Transmettre l'id au micro service todo pour ne récuperer que les données concernant notre utilisateur
 
 Sur le micro service todo:

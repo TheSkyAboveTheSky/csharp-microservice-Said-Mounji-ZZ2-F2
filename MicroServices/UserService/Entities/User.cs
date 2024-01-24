@@ -4,7 +4,7 @@ namespace UserService.Entities
 {
     public class User
     {
-        public User(string nom, string prenom, string email, string pass,string username)
+        public User(string nom, string prenom, string email, string pass, string username)
         {
             ValidatePassword(pass);
             ValidateEmail(email);
@@ -13,7 +13,7 @@ namespace UserService.Entities
             Nom = nom;
             Email = email;
             Pass = pass;
-            UserName = username;
+            Username = username;
         }
         private string GenerateUserId()
         {
@@ -26,18 +26,8 @@ namespace UserService.Entities
             {
                 throw new ArgumentException("Password must be at least 6 characters long.", nameof(password));
             }
-
-            if (!IsAlphanumeric(password))
-            {
-                throw new ArgumentException("Password must be alphanumeric.", nameof(password));
-            }
         }
 
-        private bool IsAlphanumeric(string value)
-        {
-            var regex = new Regex("^[a-zA-Z0-9]*$");
-            return regex.IsMatch(value);
-        }
         private void ValidateEmail(string email)
         {
             if (!IsValidEmail(email))
@@ -55,8 +45,8 @@ namespace UserService.Entities
         public string? Nom { get; set; }
         public string Email { get; set; }
         public string Pass { get; set; }
+        public string? Username { get; set; }
         public string NomComplet => Nom + " " + Prenom;
-        public string UserName { get; set; }
     }
     public class UserLogin
     {
