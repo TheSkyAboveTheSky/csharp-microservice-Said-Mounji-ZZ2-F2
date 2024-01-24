@@ -34,5 +34,56 @@ namespace GatewayService.Controllers
         return BadRequest("GetAllUsers failed");
       }
     }
+    [HttpGet("/{id}")]
+    public async Task<ActionResult> GetUserById(string id)
+    {
+      HttpResponseMessage response = await client.GetAsync($"api/User/{id}");
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        var user = await response.Content.ReadFromJsonAsync<Entities.User>();
+        return Ok(user);
+      }
+      else
+      {
+        return BadRequest("GetUserById failed");
+      }
+    }
+    [HttpDelete]
+    public async Task<ActionResult> DeleteAllUsers()
+    {
+      HttpResponseMessage response = await client.DeleteAsync($"api/User/");
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        var user = await response.Content.ReadFromJsonAsync<Entities.User>();
+        return Ok(user);
+      }
+      else
+      {
+        return BadRequest("DeleteAllUsers failed");
+      }
+    }
+    [HttpDelete("/{id}")]
+    public async Task<ActionResult> DeleteUserById(string id)
+    {
+      HttpResponseMessage response = await client.DeleteAsync($"api/User/{id}");
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        var user = await response.Content.ReadFromJsonAsync<Entities.User>();
+        return Ok(user);
+      }
+      else
+      {
+        return BadRequest("DeleteUserById failed");
+      }
+    }
   }
 }
