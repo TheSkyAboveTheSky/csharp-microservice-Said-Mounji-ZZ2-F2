@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Todo = FrontAppBlazor.Entities.Task;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using System.Net.Http.Headers;
 
 
 namespace FrontAppBlazor.Services
@@ -24,6 +25,8 @@ namespace FrontAppBlazor.Services
     {
       try
       {
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:5000/api/task");
 
         if (response.IsSuccessStatusCode)
@@ -46,6 +49,8 @@ namespace FrontAppBlazor.Services
     {
       try
       {
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:5000/api/task/{id}");
 
         if (response.IsSuccessStatusCode)
@@ -66,9 +71,11 @@ namespace FrontAppBlazor.Services
     }
     public async Task<Todo[]> GetUserTasks()
     {
-      var userId = await _authService.GetId();
       try
       {
+        var userId = await _authService.GetId();
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:5000/api/task/user/{userId}");
 
         if (response.IsSuccessStatusCode)
@@ -91,6 +98,8 @@ namespace FrontAppBlazor.Services
     {
       try
       {
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:5000/api/task");
 
         if (response.IsSuccessStatusCode)
@@ -111,6 +120,8 @@ namespace FrontAppBlazor.Services
     {
       try
       {
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:5000/api/task/{id}");
 
         if (response.IsSuccessStatusCode)
@@ -133,6 +144,8 @@ namespace FrontAppBlazor.Services
       try
       {
         var userId = await _authService.GetId();
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:5000/api/task/user/{userId}");
 
         if (response.IsSuccessStatusCode)
@@ -153,6 +166,8 @@ namespace FrontAppBlazor.Services
     {
       try
       {
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.PostAsJsonAsync($"http://localhost:5000/api/task", task);
 
         if (response.IsSuccessStatusCode)
@@ -173,6 +188,8 @@ namespace FrontAppBlazor.Services
     {
       try
       {
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"http://localhost:5000/api/task/{id}", task);
 
         if (response.IsSuccessStatusCode)
@@ -193,6 +210,8 @@ namespace FrontAppBlazor.Services
     {
       try
       {
+        var jwt = await _authService.GetToken();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         HttpResponseMessage response = await _httpClient.PatchAsJsonAsync($"http://localhost:5000/api/task/{id}", task);
 
         if (response.IsSuccessStatusCode)

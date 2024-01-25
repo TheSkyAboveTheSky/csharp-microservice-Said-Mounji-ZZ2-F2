@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FrontAppBlazor.Services;
+using System.Net.Http.Headers;
 
 namespace FrontAppBlazor.Services
 {
@@ -25,6 +26,8 @@ namespace FrontAppBlazor.Services
         {
             try
             {
+                var jwt = await _authService.GetToken();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
                 HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:5000/api/user");
 
                 if (response.IsSuccessStatusCode)
@@ -48,6 +51,8 @@ namespace FrontAppBlazor.Services
         {
             try
             {
+                var jwt = await _authService.GetToken();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
                 HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:5000/api/user/{id}");
 
                 if (response.IsSuccessStatusCode)
@@ -70,6 +75,8 @@ namespace FrontAppBlazor.Services
         {
             try
             {
+                var jwt = await _authService.GetToken();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
                 HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:5000/api/user/{id}");
 
                 if (response.IsSuccessStatusCode)
@@ -95,6 +102,8 @@ namespace FrontAppBlazor.Services
         {
             try
             {
+                var jwt = await _authService.GetToken();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
                 HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:5000/api/user");
 
                 if (response.IsSuccessStatusCode)
@@ -116,6 +125,8 @@ namespace FrontAppBlazor.Services
         {
             try
             {
+                var jwt = await _authService.GetToken();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
                 HttpResponseMessage response = await _httpClient.PatchAsJsonAsync($"http://localhost:5000/api/user/{id}", user);
                 if (response.IsSuccessStatusCode)
                 {
