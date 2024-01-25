@@ -16,6 +16,7 @@ namespace GatewayService.Controllers
             client = new HttpClient();
             client.BaseAddress = new System.Uri("http://localhost:5002/");
         }
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetAllTasks()
         {
@@ -33,6 +34,7 @@ namespace GatewayService.Controllers
                 return BadRequest("GetAllTasks failed");
             }
         }
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTaskById(string id)
         {
@@ -50,6 +52,7 @@ namespace GatewayService.Controllers
                 return BadRequest("GetTaskById failed");
             }
         }
+        [Authorize]
         [HttpGet("user/{userId}")]
         public async Task<ActionResult> GetTasksByUserId(string userId)
         {
@@ -67,6 +70,7 @@ namespace GatewayService.Controllers
                 return BadRequest("GetTasksByUserId failed");
             }
         }
+        [Authorize]
         [HttpDelete]
         public async Task<ActionResult> DeleteAllTasks()
         {
@@ -83,6 +87,7 @@ namespace GatewayService.Controllers
                 return BadRequest("DeleteAllTasks failed");
             }
         }
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTaskById(string id)
         {
@@ -99,6 +104,7 @@ namespace GatewayService.Controllers
                 return BadRequest("DeleteTaskById failed");
             }
         }
+        [Authorize]
         [HttpDelete("user/{userId}")]
         public async Task<ActionResult> DeleteTasksByUserId(string userId)
         {
@@ -115,6 +121,7 @@ namespace GatewayService.Controllers
                 return BadRequest("DeleteTasksByUserId failed");
             }
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> CreateTask(Entities.Task task)
         {
@@ -131,6 +138,7 @@ namespace GatewayService.Controllers
                 return BadRequest("CreateTask failed");
             }
         }
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateTask(string id, Entities.Task task)
         {
@@ -147,6 +155,7 @@ namespace GatewayService.Controllers
                 return BadRequest("UpdateTask failed");
             }
         }
+        [Authorize]
         [HttpPatch("{id}")]
         public async Task<ActionResult> PatchTask(string id, TaskModelUpdate task)
         {

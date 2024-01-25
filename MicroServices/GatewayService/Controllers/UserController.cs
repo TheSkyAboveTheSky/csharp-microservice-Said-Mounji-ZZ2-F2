@@ -16,7 +16,7 @@ namespace GatewayService.Controllers
       client = new HttpClient();
       client.BaseAddress = new System.Uri("http://localhost:5001/");
     }
-
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult> GetAllUsers()
     {
@@ -34,6 +34,7 @@ namespace GatewayService.Controllers
         return BadRequest("GetAllUsers failed");
       }
     }
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult> GetUserById(string id)
     {
@@ -51,6 +52,7 @@ namespace GatewayService.Controllers
         return BadRequest("GetUserById failed");
       }
     }
+    [Authorize]
     [HttpDelete]
     public async Task<ActionResult> DeleteAllUsers()
     {
@@ -67,6 +69,7 @@ namespace GatewayService.Controllers
         return BadRequest("DeleteAllUsers failed");
       }
     }
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUserById(string id)
     {
@@ -83,6 +86,7 @@ namespace GatewayService.Controllers
         return BadRequest("DeleteUserById failed");
       }
     }
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateUser(string id, User user)
     {
@@ -99,6 +103,7 @@ namespace GatewayService.Controllers
         return BadRequest("UpdateUser failed");
       }
     }
+    [Authorize]
     [HttpPatch("{id}")]
     public async Task<ActionResult> PatchUser(string id, UserModelUpdate user)
     {

@@ -23,7 +23,6 @@ namespace UserService.Controllers
             _context = context;
             _passwordHasher = passwordHasher;
         }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {

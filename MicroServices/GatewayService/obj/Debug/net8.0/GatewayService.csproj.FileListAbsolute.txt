@@ -32,3 +32,11 @@ C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroSer
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\obj\Debug\net8.0\GatewayService.pdb
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\obj\Debug\net8.0\GatewayService.genruntimeconfig.cache
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\obj\Debug\net8.0\ref\GatewayService.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\MicroServices\GatewayService\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
