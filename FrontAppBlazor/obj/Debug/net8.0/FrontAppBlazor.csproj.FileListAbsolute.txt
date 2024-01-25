@@ -25,3 +25,14 @@ C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontApp
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\FrontAppBlazor.pdb
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\FrontAppBlazor.genruntimeconfig.cache
 C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\ref\FrontAppBlazor.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\IdentityModel.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\FrontAppBlazor.csproj.AssemblyReference.cache
+C:\Users\Geek Store\Desktop\code\csharp-microservice-Said-Mounji-ZZ2-F2\FrontAppBlazor\obj\Debug\net8.0\FrontAppBlazor.csproj.CopyComplete

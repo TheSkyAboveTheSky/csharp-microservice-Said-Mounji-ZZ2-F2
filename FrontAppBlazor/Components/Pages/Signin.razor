@@ -1,9 +1,11 @@
 @page "/signin"
 @using FrontAppBlazor.Services;
 @inject AuthentificationService AuthentificationService;
+@inject JwtService JwtService;
 @inject NavigationManager NavigationManager;
 @inject IJSRuntime JSRuntime;
 @using System.ComponentModel.DataAnnotations;
+@using Microsoft.AspNetCore.Components.Forms;
 @rendermode InteractiveServer
 
 
@@ -74,31 +76,26 @@
 
     private async void HandleSubmit()
     {
-        Console.WriteLine("email" + signInModel.Email);
-        Console.WriteLine("password" + signInModel.Password);
+        await JwtService.GetAndVerifyTokenAsync();
         var editContext = new EditContext(signInModel);
 
         if (editContext.Validate())
         {
-            Console.WriteLine("Form validation successful.");
 
             var user = await AuthentificationService.AuthenticateUser(signInModel.Email, signInModel.Password);
 
             if (user != null)
             {
-                Console.WriteLine("User authentication successful.");
                 NavigationManager.NavigateTo("/");
                 await JSRuntime.InvokeVoidAsync("alert", "Login successful!");
             }
             else
             {
-                Console.WriteLine("Error: Invalid email or password.");
                 await JSRuntime.InvokeVoidAsync("alert", "Error: Invalid email or password.");
             }
         }
         else
         {
-            Console.WriteLine("Error: Invalid form submission. Please check your inputs.");
             await JSRuntime.InvokeVoidAsync("alert", "Error: Invalid form submission. Please check your inputs.");
         }
     }

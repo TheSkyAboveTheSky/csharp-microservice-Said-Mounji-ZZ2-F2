@@ -16,8 +16,7 @@ namespace FrontAppBlazor.Services
     public async Task<User?> AuthenticateUser(string email, string password)
     {
       var login = new UserLogin() { Email = email, Pass = password };
-      Console.WriteLine(email);
-      Console.WriteLine(password);
+
       HttpResponseMessage response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/user/login", login);
       if (response.IsSuccessStatusCode)
       {
