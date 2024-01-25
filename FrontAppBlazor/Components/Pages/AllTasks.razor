@@ -1,4 +1,4 @@
-@page "/myTasks"
+@page "/Tasks"
 @using FrontAppBlazor.Services
 @using FrontAppBlazor.Entities
 @inject JwtService JwtService
@@ -199,7 +199,6 @@
   {
     if (firstRender)
     {
-      tasks = await TaskService.GetUserTasks();
       var isAuth = await JwtService.IsAuthenticated();
       if (!isAuth)
       {
@@ -213,7 +212,7 @@
     try
     {
       await TaskService.DeleteTaskById(id);
-      tasks = await TaskService.GetUserTasks();
+      tasks = await TaskService.GetAllTasks();
     }
     catch (Exception ex)
     {
@@ -225,8 +224,8 @@
   {
     try
     {
-      await TaskService.DeleteAllUserTasks();
-      tasks = await TaskService.GetUserTasks();
+      await TaskService.DeleteAllTasks();
+      tasks = await TaskService.GetAllTasks();
     }
     catch (Exception ex)
     {
@@ -241,7 +240,7 @@
       var userID = await AuthentificationService.GetId();
       var newTask = new Entities.Task(newTaskTitle, newTaskDescription, userID);
       await TaskService.CreateTask(newTask);
-      tasks = await TaskService.GetUserTasks();
+      tasks = await TaskService.GetAllTasks();
       HideCreateTaskModal();
       newTaskDescription = "";
       newTaskTitle = "";
@@ -263,7 +262,7 @@
           Description = updateTaskDescription,
           UserId = userID
         });
-      tasks = await TaskService.GetUserTasks();
+      tasks = await TaskService.GetAllTasks();
       HideUpdateTaskModal();
       updateTaskDescription = "";
       updateTaskTitle = "";

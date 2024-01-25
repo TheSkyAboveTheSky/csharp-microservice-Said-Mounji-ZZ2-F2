@@ -4,16 +4,21 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Todo = FrontAppBlazor.Entities.Task;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+
 
 namespace FrontAppBlazor.Services
 {
   public class TaskService
   {
     private readonly HttpClient _httpClient;
+    private readonly AuthentificationService _authService;
 
-    public TaskService(HttpClient httpClient)
+    public TaskService(HttpClient httpClient, AuthentificationService authService)
     {
+
       _httpClient = httpClient;
+      _authService = authService;
     }
     public async Task<Todo[]> GetAllTasks()
     {
@@ -59,8 +64,9 @@ namespace FrontAppBlazor.Services
         return null;
       }
     }
-    public async Task<Todo[]> GetUserTasks(string userId)
+    public async Task<Todo[]> GetUserTasks()
     {
+      var userId = await _authService.GetId();
       try
       {
         HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:5000/api/task/user/{userId}");
@@ -121,10 +127,12 @@ namespace FrontAppBlazor.Services
         Console.WriteLine($"An error occurred while loading tasks: {ex.Message}");
       }
     }
-    public async System.Threading.Tasks.Task DeleteAllUserTasks(string userId)
+    public async System.Threading.Tasks.Task DeleteAllUserTasks()
     {
+
       try
       {
+        var userId = await _authService.GetId();
         HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:5000/api/task/user/{userId}");
 
         if (response.IsSuccessStatusCode)

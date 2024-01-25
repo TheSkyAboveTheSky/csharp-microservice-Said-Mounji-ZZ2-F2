@@ -52,7 +52,7 @@ namespace FrontAppBlazor.Services
       await _sessionStorage.DeleteAsync("jwt");
       await _sessionStorage.DeleteAsync("id");
     }
-    public async Task<String?> GetId()
+    public async Task<String> GetId()
     {
       var id = await _sessionStorage.GetAsync<string>("id");
       return id.Value;
