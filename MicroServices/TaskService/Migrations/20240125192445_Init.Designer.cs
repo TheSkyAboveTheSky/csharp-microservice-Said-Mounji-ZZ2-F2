@@ -10,7 +10,7 @@ using TaskService.Data;
 namespace TaskService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240124161351_Init")]
+    [Migration("20240125192445_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -27,6 +27,9 @@ namespace TaskService.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsChecked")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Titre")
                         .IsRequired()

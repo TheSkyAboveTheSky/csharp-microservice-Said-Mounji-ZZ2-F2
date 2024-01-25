@@ -83,5 +83,46 @@ namespace TaskService.controllers
 
       return Ok(task);
     }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateTask(string id, Entities.Task task)
+    {
+      task.Id = id;
+      _context.Entry(task).State = EntityState.Modified;
+      await _context.SaveChangesAsync();
+
+      return NoContent();
+    }
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateTaskPatch(string id, TaskModelUpdate task)
+    {
+      var taskToUpdate = await _context.Task.FindAsync(id);
+      if(task.Titre != null)
+      {
+        taskToUpdate.Titre = task.Titre;
+      }
+      if(task.Description != null)
+      {
+        taskToUpdate.Description = task.Description;
+      }
+      if(task.UserId != null)
+      {
+        taskToUpdate.UserId = task.UserId;
+      }
+      if(task.IsChecked != null)
+      {
+        taskToUpdate.IsChecked = (bool)task.IsChecked;
+      }
+      _context.Entry(taskToUpdate).State = EntityState.Modified;
+      await _context.SaveChangesAsync();
+
+      return NoContent();
+    }
+    public class TaskModelUpdate
+    {
+      public string? Titre { get; set; }
+      public string? Description { get; set; }
+      public string? UserId { get; set; }
+      public bool? IsChecked { get; set; }
+    }
   }
 }

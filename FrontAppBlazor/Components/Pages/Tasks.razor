@@ -4,86 +4,93 @@
 @inject JwtService JwtService
 @inject UserService UserService
 @inject TaskService TaskService
-@inject NavigationManager NavigationManager;
-@using Microsoft.AspNetCore.Mvc;
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 
-@if (tasks == null)
-{
-  <p><em>Loading...</em></p>
-}
-else
-{
-  <button class="btn btn-primary"
-    @onclick="DeleteAllTasks">Add a new todo</button>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var task in tasks)
-        {
-            <tr>
-                <td>@task.Id</td>
-                <td>@task.Titre</td>
-                <td>@task.Description</td>
-                <td>
-                    <button class="btn btn-danger" @onclick="() => DeleteTask(task.Id)">Delete</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-}
+<div class="section-body mt-3">
+  <div class="container-fluid">
+    <div class="tab-content">
+      <div class="tab-pane fade show active"
+        id="todo-list"
+        role="tabpanel">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive todo_list">
+              <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="w100">Title</th>
+                    <th class="w100">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if (tasks != null)
+                  {
+                    @foreach (var task in tasks)
+                    {
+                      <tr>
+                        <td>
+                          <label class="custom-control custom-checkbox">
+                            <input type="checkbox"
+                              class="custom-control-input"
+                              style="width: 2rem;" />
+                            <span class="custom-control-label"
+                              style="font-size: 1rem; color: black;">@task.Id</span>
+                          </label>
+                        </td>
+                        <td class="text-right">@task.Titre</td>
+                        <td class="text-right">@task.Description</td>
+                        <td></td>
+                        <td>
+                          <button class="btn btn-sm"
+                            style="color: red; margin: 1rem;" @onclick="() => DeleteTask(task.Id)">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                          <button class="btn btn-sm"
+                            style="color: blue;">
+                            <i class="fa fa-pen-to-square"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    }
+                  }
+                  else
+                  {
+                    <tr>
+                      <td colspan="5">No tasks found</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @code {
-  private Entities.Task[]? tasks;
+  private Entities.Task[] tasks;
+
   protected override async System.Threading.Tasks.Task OnInitializedAsync()
   {
     tasks = await TaskService.GetAllTasks();
   }
-  protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
-  {
-    if (firstRender)
-    {
-      var isAuth = await JwtService.IsAuthenticated();
-      if (!isAuth)
-      {
-        NavigationManager.NavigateTo("/signin");
 
-      }
-
-    }
-  }
-  private async System.Threading.Tasks.Task DeleteAllTasks()
-  {
-    try
-    {
-      await TaskService.DeleteAllTasks();
-      NavigationManager.NavigateTo("/Tasks");
-    }
-    catch (Exception ex)
-    {
-      Console.WriteLine($"An error occurred while deleting all tasks: {ex.Message}");
-    }
-  }
   private async System.Threading.Tasks.Task DeleteTask(string id)
   {
     try
     {
       await TaskService.DeleteTaskById(id);
-      NavigationManager.NavigateTo("/Tasks");
+      tasks = await TaskService.GetAllTasks();
     }
     catch (Exception ex)
     {
       Console.WriteLine($"An error occurred while deleting task: {ex.Message}");
     }
   }
+
 }
