@@ -20,4 +20,11 @@ namespace FrontAppBlazor.Entities
     public string UserId { get; set; }
     public bool IsChecked { get; set; }
   }
+  public class TaskModelUpdate
+  {
+    public string? Titre { get; set; }
+    public string? Description { get; set; }
+    public string? UserId { get; set; }
+    public bool? IsChecked { get; set; }
+  }
 }

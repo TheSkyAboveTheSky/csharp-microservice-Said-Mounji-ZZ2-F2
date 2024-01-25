@@ -83,6 +83,38 @@ namespace GatewayService.Controllers
         return BadRequest("DeleteUserById failed");
       }
     }
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateUser(string id, User user)
+    {
+      HttpResponseMessage response = await client.PutAsJsonAsync($"api/User/{id}", user);
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        return Ok();
+      }
+      else
+      {
+        return BadRequest("UpdateUser failed");
+      }
+    }
+    [HttpPatch("{id}")]
+    public async Task<ActionResult> PatchUser(string id, UserModelUpdate user)
+    {
+      HttpResponseMessage response = await client.PatchAsJsonAsync($"api/User/{id}", user);
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        return Ok();
+      }
+      else
+      {
+        return BadRequest("PatchUser failed");
+      }
+    }
     [HttpPost("register")]
     public async Task<ActionResult> CreateUser(User user)
     {

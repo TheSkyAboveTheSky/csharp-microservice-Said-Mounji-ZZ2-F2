@@ -75,7 +75,38 @@ namespace UserService.Controllers
 
             return NoContent();
         }
-
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(string id,User user)
+        {
+            user.Id = id;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchUser(string id, UserModelUpdate user)
+        {
+            var userFromDb = await _context.User.FindAsync(id);
+            if(user.Prenom != null)
+            {
+                userFromDb.Prenom = user.Prenom;
+            }
+            if (user.Nom != null)
+            {
+                userFromDb.Nom = user.Nom;
+            }
+            if (user.Email != null)
+            {
+                userFromDb.Email = user.Email;
+            }
+            if (user.Username != null)
+            {
+                userFromDb.Username = user.Username;
+            }
+            _context.Entry(userFromDb).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
         [HttpPost("register")]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
@@ -148,5 +179,7 @@ namespace UserService.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
     }
 }

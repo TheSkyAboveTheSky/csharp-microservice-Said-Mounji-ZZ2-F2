@@ -59,4 +59,11 @@ public class User
         public User? User { get; set; }
         public string? Token { get; set; }
     }
+    public class UserModelUpdate
+    {
+        public string? Prenom { get; set; }
+        public string? Nom { get; set; }
+        public string? Email { get; set; }
+        public string? Username { get; set; }
+    }
 }

@@ -74,8 +74,12 @@ namespace FrontAppBlazor.Services
 
                 if (response.IsSuccessStatusCode)
                 {
+                    var userId = await _authService.GetId();
+                    if (userId == id)
+                    {
+                        await _authService.Logout();
+                    }
                     Console.WriteLine("User deleted");
-                    await _authService.Logout();
                 }
                 else
                 {
@@ -107,6 +111,39 @@ namespace FrontAppBlazor.Services
             {
                 Console.WriteLine($"An error occurred while loading users: {ex.Message}");
             }
+        }
+        public async System.Threading.Tasks.Task UpdateUser(string id, UserModelUpdate user)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.PatchAsJsonAsync($"http://localhost:5000/api/user/{id}", user);
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("User updated");
+                }
+                else
+                {
+                    Console.WriteLine("User not updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while loading users: {ex.Message}");
+            }
+        }
+        public async Task<User?> CreateUser(string prenom, string nom, string email, string password, string username)
+        {
+            var registerInfo = new User(nom, prenom, email, password, username);
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/User/register", registerInfo);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<UserToken>();
+                if (result != null)
+                {
+                    return result.User;
+                }
+            }
+            return null;
         }
     }
 }

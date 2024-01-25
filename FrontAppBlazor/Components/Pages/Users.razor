@@ -1,0 +1,349 @@
+@page "/Users"
+@using FrontAppBlazor.Services
+@using FrontAppBlazor.Entities
+@inject JwtService JwtService
+@inject UserService UserService
+@inject TaskService TaskService
+@inject AuthentificationService AuthentificationService
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Mvc
+@rendermode InteractiveServer
+
+<div class="section-body mt-3">
+  <div class="container-fluid">
+    <div class="tab-content">
+      <div class="tab-pane fade show active"
+        id="todo-list"
+        role="tabpanel">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <button class="btn btn-primary"
+                @onclick="ShowCreateUserModal">Create New User</button>
+              <button class="btn btn-danger"
+                @onclick="DeleteAllUsers">Delete All Users</button>
+            </div>
+            <div class="table-responsive todo_list">
+              <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="w100">Nom</th>
+                    <th class="w100">Prenom</th>
+                    <th class="w100">Username</th>
+                    <th class="w100">Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @if (users != null)
+                  {
+                    @foreach (var user in users)
+                    {
+                      <tr>
+                        <td>
+                          <span style="font-size: 1rem; color: black;">@user.Id</span>
+
+                        </td>
+                        <td class="text-right">@user.Nom</td>
+                        <td class="text-right">@user.Prenom</td>
+                        <td class="text-right">@user.Username</td>
+                        <td class="text-right">@user.Email</td>
+                        <td>
+                          <button class="btn btn-sm"
+                            style="color: red; margin: 1rem;"
+                            @onclick="() => DeleteUser(user.Id)">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                          <button class="btn btn-sm"
+                            style="color: blue;"
+                            @onclick="() => ShowUpdateUserButton(user.Id,user.Prenom,user.Nom,user.Username,user.Email)">
+                            <i class="fa fa-pen-to-square"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    }
+                  }
+                  else
+                  {
+                    <tr>
+                      <td colspan="5">No tasks found</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@if (showCreateUserModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New User</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideCreateUserModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="prenom">Prenom</label>
+              <input type="text"
+                class="form-control"
+                id="prenom"
+                placeholder="Enter prenom"
+                @bind="newUserPrenom">
+            </div>
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input type="text"
+                class="form-control"
+                id="nom"
+                placeholder="Enter nom"
+                @bind="newUserNom">
+            </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text"
+                class="form-control"
+                id="username"
+                placeholder="Enter username"
+                @bind="newUserUsername">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email"
+                class="form-control"
+                id="email"
+                placeholder="Enter email"
+                @bind="newUserEmail">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password"
+                class="form-control"
+                id="password"
+                placeholder="Enter password"
+                @bind="newUserPassword">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideCreateUserModal">Close</button>
+          <button type="button"
+            class="btn btn-primary"
+            @onclick="CreateNewUser">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@if (showUpdateUserModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update User</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideUpdateUserModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="update-prenom">Prenom</label>
+              <input type="text"
+                class="form-control"
+                id="update-prenom"
+                placeholder="Enter prenom"
+                @bind="updateUserPrenom">
+            </div>
+            <div class="form-group">
+              <label for="update-nom">Nom</label>
+              <input type="text"
+                class="form-control"
+                id="update-nom"
+                placeholder="Enter nom"
+                @bind="updateUserNom">
+            </div>
+            <div class="form-group">
+              <label for="update-username">Username</label>
+              <input type="text"
+                class="form-control"
+                id="update-username"
+                placeholder="Enter username"
+                @bind="updateUserUsername">
+            </div>
+            <div class="form-group">
+              <label for="update-email">Email</label>
+              <input type="email"
+                class="form-control"
+                id="update-email"
+                placeholder="Enter email"
+                @bind="updateUserEmail">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideUpdateUserModal">Close</button>
+          <button class="btn btn-primary"
+            @onclick="() => UpdateUser(updateUserId)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@code {
+  private User[] users;
+  private bool showCreateUserModal = false;
+  private bool showUpdateUserModal = false;
+  private string newUserPrenom;
+  private string newUserNom;
+  private string newUserUsername;
+  private string newUserEmail;
+  private string newUserPassword;
+  private string updateUserPrenom;
+  private string updateUserNom;
+  private string updateUserUsername;
+  private string updateUserEmail;
+  private string updateUserId;
+
+  protected override async System.Threading.Tasks.Task OnInitializedAsync()
+  {
+    users = await UserService.GetAllUsers();
+  }
+  protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      var isAuth = await JwtService.IsAuthenticated();
+      if (!isAuth)
+      {
+        NavigationManager.NavigateTo("/signin");
+      }
+    }
+  }
+
+  private async System.Threading.Tasks.Task DeleteUser(string id)
+  {
+    try
+    {
+      await UserService.DeleteUserById(id);
+      users = await UserService.GetAllUsers();
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while deleting user: {ex.Message}");
+    }
+  }
+
+  private async System.Threading.Tasks.Task DeleteAllUsers()
+  {
+    try
+    {
+      await UserService.DeleteAllUsers();
+      users = await UserService.GetAllUsers();
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while deleting all users: {ex.Message}");
+    }
+  }
+
+  private async System.Threading.Tasks.Task CreateNewUser()
+  {
+    try
+    {
+      await UserService.CreateUser(newUserNom,newUserPrenom,newUserEmail,newUserPassword,newUserUsername);
+      users = await UserService.GetAllUsers();
+      HideCreateUserModal();
+      newUserNom = "";
+      newUserPrenom = "";
+      newUserEmail = "";
+      newUserPassword = "";
+      newUserUsername = "";
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new user: {ex.Message}");
+    }
+  }
+  private async System.Threading.Tasks.Task UpdateUser(string id)
+  {
+    try
+    {
+
+      ShowUpdateUserModal();
+      var user = new UserModelUpdate(){
+        Nom = updateUserNom,
+        Prenom = updateUserPrenom,
+        Email = updateUserEmail,
+        Username = updateUserUsername
+      };
+      await UserService.UpdateUser(id,user);
+      users = await UserService.GetAllUsers();
+      HideUpdateUserModal();
+      updateUserNom = "";
+      updateUserPrenom = "";
+      updateUserEmail = "";
+      updateUserUsername = "";
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new user: {ex.Message}");
+    }
+  }
+  private void ShowCreateUserModal()
+  {
+    showCreateUserModal = true;
+  }
+
+  private void HideCreateUserModal()
+  {
+    showCreateUserModal = false;
+  }
+  private void ShowUpdateUserModal()
+  {
+    showUpdateUserModal = true;
+  }
+
+  private void HideUpdateUserModal()
+  {
+    showUpdateUserModal = false;
+  }
+  private void ShowUpdateUserButton(string id, string prenom, string nom, string username, string email)
+  {
+    updateUserNom = nom;
+    updateUserPrenom = prenom;
+    updateUserEmail = email;
+    updateUserUsername = username;
+    updateUserId = id;
+    showUpdateUserModal = true;
+  }
+
+}

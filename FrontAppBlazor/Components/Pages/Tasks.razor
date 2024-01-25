@@ -4,6 +4,7 @@
 @inject JwtService JwtService
 @inject UserService UserService
 @inject TaskService TaskService
+@inject AuthentificationService AuthentificationService
 @inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
@@ -16,6 +17,12 @@
         role="tabpanel">
         <div class="card">
           <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <button class="btn btn-primary"
+                @onclick="ShowCreateTaskModal">Create New Task</button>
+              <button class="btn btn-danger"
+                @onclick="DeleteAllTasks">Delete All Tasks</button>
+            </div>
             <div class="table-responsive todo_list">
               <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
                 <thead>
@@ -35,21 +42,25 @@
                           <label class="custom-control custom-checkbox">
                             <input type="checkbox"
                               class="custom-control-input"
-                              style="width: 2rem;" />
-                            <span class="custom-control-label"
-                              style="font-size: 1rem; color: black;">@task.Id</span>
+                              style="width: 2rem;"
+                              checked="@task.IsChecked"
+                              @onclick="() => ToggleTask(task)" />
+                            <span style="font-size: 1rem; color: black; @GetTextStyle(task)">@task.Id</span>
                           </label>
+
                         </td>
                         <td class="text-right">@task.Titre</td>
                         <td class="text-right">@task.Description</td>
                         <td></td>
                         <td>
                           <button class="btn btn-sm"
-                            style="color: red; margin: 1rem;" @onclick="() => DeleteTask(task.Id)">
+                            style="color: red; margin: 1rem;"
+                            @onclick="() => DeleteTask(task.Id)">
                             <i class="fa fa-trash"></i>
                           </button>
                           <button class="btn btn-sm"
-                            style="color: blue;">
+                            style="color: blue;"
+                            @onclick="() => ShowUpdateTaskButton(task.Id,task.Titre,task.Description)">
                             <i class="fa fa-pen-to-square"></i>
                           </button>
                         </td>
@@ -71,13 +82,129 @@
     </div>
   </div>
 </div>
-
+@if (showCreateTaskModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Task</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideCreateTaskModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter title"
+                @bind="newTaskTitle">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                id="description"
+                rows="3"
+                placeholder="Enter description"
+                @bind="newTaskDescription"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideCreateTaskModal">Close</button>
+          <button type="button"
+            class="btn btn-primary"
+            @onclick="CreateNewTask">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@if (showUpdateTaskModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Task</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideUpdateTaskModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter title"
+                @bind="updateTaskTitle">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                id="description"
+                rows="3"
+                placeholder="Enter description"
+                @bind="updateTaskDescription"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideUpdateTaskModal">Close</button>
+          <button class="btn btn-primary"
+            @onclick="() => UpdateTask(updateTaskId)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
 @code {
   private Entities.Task[] tasks;
+  private bool showCreateTaskModal = false;
+  private bool showUpdateTaskModal = false;
+  private string newTaskTitle;
+  private string newTaskDescription;
+  private string updateTaskTitle;
+  private string updateTaskDescription;
+  private string updateTaskId;
 
   protected override async System.Threading.Tasks.Task OnInitializedAsync()
   {
     tasks = await TaskService.GetAllTasks();
+  }
+  protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      var isAuth = await JwtService.IsAuthenticated();
+      if (!isAuth)
+      {
+        NavigationManager.NavigateTo("/signin");
+      }
+    }
   }
 
   private async System.Threading.Tasks.Task DeleteTask(string id)
@@ -91,6 +218,94 @@
     {
       Console.WriteLine($"An error occurred while deleting task: {ex.Message}");
     }
+  }
+
+  private async System.Threading.Tasks.Task DeleteAllTasks()
+  {
+    try
+    {
+      await TaskService.DeleteAllTasks();
+      tasks = await TaskService.GetAllTasks();
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while deleting all tasks: {ex.Message}");
+    }
+  }
+
+  private async System.Threading.Tasks.Task CreateNewTask()
+  {
+    try
+    {
+      var userID = await AuthentificationService.GetId();
+      var newTask = new Entities.Task(newTaskTitle, newTaskDescription, userID);
+      await TaskService.CreateTask(newTask);
+      tasks = await TaskService.GetAllTasks();
+      HideCreateTaskModal();
+      newTaskDescription = "";
+      newTaskTitle = "";
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new task: {ex.Message}");
+    }
+  }
+  private async System.Threading.Tasks.Task UpdateTask(string id)
+  {
+    try
+    {
+      var userID = await AuthentificationService.GetId();
+      ShowUpdateTaskModal();
+      await TaskService.PatchTask(id, new TaskModelUpdate()
+        {
+          Titre = updateTaskTitle,
+          Description = updateTaskDescription,
+          UserId = userID
+        });
+      tasks = await TaskService.GetAllTasks();
+      HideUpdateTaskModal();
+      updateTaskDescription = "";
+      updateTaskTitle = "";
+      updateTaskId = "";
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new task: {ex.Message}");
+    }
+  }
+  private void ShowCreateTaskModal()
+  {
+    showCreateTaskModal = true;
+  }
+
+  private void HideCreateTaskModal()
+  {
+    showCreateTaskModal = false;
+  }
+  private void ShowUpdateTaskModal()
+  {
+    showUpdateTaskModal = true;
+  }
+
+  private void HideUpdateTaskModal()
+  {
+    showUpdateTaskModal = false;
+  }
+  private void ShowUpdateTaskButton(string id, string title, string description)
+  {
+    updateTaskTitle = title;
+    updateTaskDescription = description;
+    updateTaskId = id;
+    showUpdateTaskModal = true;
+  }
+  private string GetTextStyle(Entities.Task task)
+  {
+    return task.IsChecked ? "text-decoration: line-through;" : "";
+  }
+  private async System.Threading.Tasks.Task ToggleTask(Entities.Task task)
+  {
+    task.IsChecked = !task.IsChecked;
+    await TaskService.UpdateTask(task.Id, task);
   }
 
 }

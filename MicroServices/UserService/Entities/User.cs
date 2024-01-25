@@ -41,11 +41,11 @@ namespace UserService.Entities
             return !string.IsNullOrEmpty(email) && regex.IsMatch(email);
         }
         public string Id { get; set; }
-        public string? Prenom { get; set; }
-        public string? Nom { get; set; }
+        public string Prenom { get; set; }
+        public string Nom { get; set; }
         public string Email { get; set; }
         public string Pass { get; set; }
-        public string? Username { get; set; }
+        public string Username { get; set; }
         public string NomComplet => Nom + " " + Prenom;
     }
     public class UserLogin
@@ -57,5 +57,12 @@ namespace UserService.Entities
     {
         public User? User { get; set; }
         public string? Token { get; set; }
+    }
+    public class UserModelUpdate
+    {
+        public string? Prenom { get; set; }
+        public string? Nom { get; set; }
+        public string? Email { get; set; }
+        public string? Username { get; set; }
     }
 }

@@ -24,6 +24,8 @@ namespace FrontAppBlazor.Services
         if (result != null)
         {
           await _sessionStorage.SetAsync("jwt", result.Token);
+          await _sessionStorage.SetAsync("id", result.User.Id.ToString());
+
           return result.User;
         }
       }
@@ -39,6 +41,7 @@ namespace FrontAppBlazor.Services
         if (result != null)
         {
           await _sessionStorage.SetAsync("jwt", result.Token);
+          await _sessionStorage.SetAsync("id", result.User.Id.ToString());
           return result.User;
         }
       }
@@ -47,7 +50,12 @@ namespace FrontAppBlazor.Services
     public async System.Threading.Tasks.Task Logout()
     {
       await _sessionStorage.DeleteAsync("jwt");
+      await _sessionStorage.DeleteAsync("id");
     }
-
+    public async Task<String?> GetId()
+    {
+      var id = await _sessionStorage.GetAsync<string>("id");
+      return id.Value;
+    }
   }
 }
