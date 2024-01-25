@@ -27,6 +27,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<ProtectedLocalStorage>();
 builder.Services.AddScoped<AuthentificationService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TaskService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddAuthorization();
 

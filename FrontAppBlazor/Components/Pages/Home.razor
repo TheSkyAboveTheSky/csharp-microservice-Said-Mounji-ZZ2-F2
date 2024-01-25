@@ -1,14 +1,19 @@
 ﻿@page "/"
+@using FrontAppBlazor.Entities
 @using FrontAppBlazor.Services
 @inject JwtService JwtService
+@inject UserService UserService
+@inject TaskService TaskService
 @inject NavigationManager NavigationManager;
+@using Microsoft.AspNetCore.Mvc;
 @rendermode InteractiveServer
 
 
-<h1>Welcome to the app!</h1>
-
 @code {
-  protected override async Task OnAfterRenderAsync(bool firstRender)
+  protected override async System.Threading.Tasks.Task OnInitializedAsync()
+  {
+  }
+  protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
   {
     if (firstRender)
     {
@@ -16,9 +21,8 @@
       if (!isAuth)
       {
         NavigationManager.NavigateTo("/signin");
-
       }
-
     }
   }
+
 }

@@ -18,7 +18,7 @@ namespace GatewayService.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAllUsers(User user)
+    public async Task<ActionResult> GetAllUsers()
     {
       HttpResponseMessage response = await client.GetAsync($"api/User/");
       Console.WriteLine(response.Content);
@@ -34,7 +34,7 @@ namespace GatewayService.Controllers
         return BadRequest("GetAllUsers failed");
       }
     }
-    [HttpGet("/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult> GetUserById(string id)
     {
       HttpResponseMessage response = await client.GetAsync($"api/User/{id}");
@@ -67,7 +67,7 @@ namespace GatewayService.Controllers
         return BadRequest("DeleteAllUsers failed");
       }
     }
-    [HttpDelete("/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUserById(string id)
     {
       HttpResponseMessage response = await client.DeleteAsync($"api/User/{id}");
