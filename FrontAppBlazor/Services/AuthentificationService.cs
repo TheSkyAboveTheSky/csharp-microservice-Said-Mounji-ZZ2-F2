@@ -44,5 +44,10 @@ namespace FrontAppBlazor.Services
       }
       return null;
     }
+    public async System.Threading.Tasks.Task Logout()
+    {
+      await _sessionStorage.DeleteAsync("jwt");
+    }
+
   }
 }

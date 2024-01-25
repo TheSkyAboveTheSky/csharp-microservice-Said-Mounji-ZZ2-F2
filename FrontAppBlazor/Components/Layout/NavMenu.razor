@@ -1,8 +1,17 @@
-﻿<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+﻿@using FrontAppBlazor.Services
+@inject AuthentificationService AuthentificationService
+@inject JwtService JwtService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@rendermode InteractiveServer
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container-fluid">
         <a class="navbar-brand"
             href="">SM Tasks</a>
-        <button class="navbar-toggler @NavButtonCssClass"
+        <button class="navbar-toggler @(NavButtonCssClass ?? "")"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarCollapse"
@@ -11,23 +20,34 @@
             @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse @NavBarCssClass"
+        <div class="collapse navbar-collapse @(NavBarCssClass ?? "")"
             id="navbarCollapse"
             @onclick="ToggleNavMenu">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <li class="nav-item">
-                    <NavLink class="nav-link"
-                        href=""
-                        Match="NavLinkMatch.All">
-                        SIGN IN
-                    </NavLink>
-                </li>
-                <li class="nav-item">
-                    <NavLink class="nav-link"
-                        href="/signup">
-                        SIGN UP
-                    </NavLink>
-                </li>
+                @if (!isAuth)
+                {
+                    <li class="nav-item">
+                        <NavLink class="nav-link"
+                            href="/signin">SIGN IN</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link"
+                            href="/signup">SIGN UP</NavLink>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <NavLink class="nav-link"
+                            href="/tasks">TASKS</NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link"
+                            href="/logout"
+                            @onclick="Logout">LOGOUT</NavLink>
+                    </li>
+
+                }
             </ul>
         </div>
     </div>
@@ -37,9 +57,25 @@
     private bool collapseNavMenu = true;
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
+    private bool isAuth;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isAuth = await JwtService.IsAuthenticated();
+            StateHasChanged();
+        }
+    }
+    private async Task Logout()
+    {
+        await AuthentificationService.Logout(); 
+        NavigationManager.NavigateTo("/");
+    }
+
 }

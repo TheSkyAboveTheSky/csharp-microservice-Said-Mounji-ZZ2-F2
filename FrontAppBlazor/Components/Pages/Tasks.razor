@@ -1,0 +1,23 @@
+@page "/Tasks"
+@using FrontAppBlazor.Services
+@inject JwtService JwtService
+@inject NavigationManager NavigationManager;
+@rendermode InteractiveServer
+
+<h1> Tasks </h1>
+
+@code {
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      var isAuth = await JwtService.IsAuthenticated();
+      if (!isAuth)
+      {
+        NavigationManager.NavigateTo("/signin");
+
+      }
+
+    }
+  }
+}
