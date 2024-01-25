@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "MicroService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskService", "MicroServices\TaskService\TaskService.csproj", "{78C7DCAC-38D4-4185-AABA-019E391BED12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{380AB2BB-B3AE-47C1-A134-430B74C14A20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{78C7DCAC-38D4-4185-AABA-019E391BED12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78C7DCAC-38D4-4185-AABA-019E391BED12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78C7DCAC-38D4-4185-AABA-019E391BED12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{380AB2BB-B3AE-47C1-A134-430B74C14A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{380AB2BB-B3AE-47C1-A134-430B74C14A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{380AB2BB-B3AE-47C1-A134-430B74C14A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{380AB2BB-B3AE-47C1-A134-430B74C14A20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4D42AFA1-7823-461F-8106-AAC31708C332} = {052637CC-CD34-440D-949B-AD10ED132665}

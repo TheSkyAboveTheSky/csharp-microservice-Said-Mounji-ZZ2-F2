@@ -15,6 +15,7 @@ public class User
             Pass = pass;
             Username = username;
         }
+
         private string GenerateUserId()
         {
             return "user-" + Guid.NewGuid().ToString().Substring(0, 6);
