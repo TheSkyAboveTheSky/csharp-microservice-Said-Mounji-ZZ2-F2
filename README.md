@@ -8,7 +8,7 @@ Les objectifs sont les suivants.
 
 Sur le front:
 - [X] Créer une page d'inscription
-- [ ] Modifier le login pour que le front communique avec la gateway et appel la route de login
+- [X] Modifier le login pour que le front communique avec la gateway et appel la route de login
 - [ ] Faire que la page d'inscription appel la gateway
 - [ ] Faire une page pour afficher un visuel de votre second micro service ( liste de tâches )
 
@@ -20,7 +20,7 @@ Sur la gateway:
 # Séance 3
 
 Sur le front:
-- [ ] Récuperer le JWT lors du login et le stocker dans le local storage
+- [X] Récuperer le JWT lors du login et le stocker dans le local storage
 - [ ] Ajouter le token JWT aux appels HTTP autre que login / register
 - [ ] Pouvoir lister les todo de l'utilisateur connecté
 - [ ] Pouvoir supprimer un todo
