@@ -74,9 +74,19 @@
     private SignInModel signInModel = new SignInModel();
     private string image = "/signin.jpg";
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var isAuth = await JwtService.IsAuthenticated();
+            if (isAuth)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
+    }
     private async void HandleSubmit()
     {
-        await JwtService.GetAndVerifyTokenAsync();
         var editContext = new EditContext(signInModel);
 
         if (editContext.Validate())

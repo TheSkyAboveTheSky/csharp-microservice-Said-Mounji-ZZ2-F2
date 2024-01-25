@@ -50,5 +50,11 @@ namespace FrontAppBlazor.Services
       var token = await _sessionStorage.GetAsync<string>("jwt");
       return token.Value;
     }
+
+    public async Task<bool> IsAuthenticated()
+    {
+      string token = await GetAndVerifyTokenAsync();
+      return token != null;
+    }
   }
 }
