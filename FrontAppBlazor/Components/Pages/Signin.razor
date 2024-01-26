@@ -8,7 +8,6 @@
 @using Microsoft.AspNetCore.Components.Forms;
 @rendermode InteractiveServer
 
-
 <div>
     <section class="vh-100">
         <div class="container h-100">
@@ -53,7 +52,7 @@
                                     </EditForm>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <a href="/signup"
-                                            class="btn btn-secondary btn-lg">Create Account If You Don't have one</a>
+                                            class="btn btn-secondary">Create Account If You Don't have one</a>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -69,7 +68,6 @@
         </div>
     </section>
 </div>
-
 @code {
     private SignInModel signInModel = new SignInModel();
     private string image = "/signin.jpg";
@@ -86,23 +84,23 @@
             }
         }
     }
-    private async void HandleSubmit()
+    private async Task HandleSubmit()
     {
         var editContext = new EditContext(signInModel);
 
         if (editContext.Validate())
         {
-
             var user = await AuthentificationService.AuthenticateUser(signInModel.Email, signInModel.Password);
 
             if (user != null)
             {
                 NavigationManager.NavigateTo("/", forceLoad: true);
-                await JSRuntime.InvokeVoidAsync("alert", "Login successful!");
+                await JSRuntime.InvokeVoidAsync("alert", "LoggedIn Successfully");
+
             }
             else
             {
-                await JSRuntime.InvokeVoidAsync("alert", "Error: Invalid email or password.");
+                await JSRuntime.InvokeVoidAsync("alert", "Error: LoggedIn Failed.");
             }
         }
         else
@@ -110,7 +108,6 @@
             await JSRuntime.InvokeVoidAsync("alert", "Error: Invalid form submission. Please check your inputs.");
         }
     }
-
 
     public class SignInModel
     {

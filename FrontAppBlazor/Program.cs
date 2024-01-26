@@ -46,7 +46,7 @@ builder.Services
             ValidAudience = "localhost:5000",
             ValidIssuer = "SM Tasks",
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("SMTask"))
+                Encoding.UTF8.GetBytes("SaidMounjiTokenKey"))
         };
     });
 

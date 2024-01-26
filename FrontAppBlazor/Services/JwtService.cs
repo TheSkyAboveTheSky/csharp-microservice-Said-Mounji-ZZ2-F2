@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,7 +16,7 @@ namespace FrontAppBlazor.Services
       _sessionStorage = sessionStorage;
     }
 
-    private const string Key = "SMTask";
+    private const string Key = "SaidMounjiTokenKeyLongLongLongLongLongLong";
 
     public async Task<string> GetAndVerifyTokenAsync()
     {
