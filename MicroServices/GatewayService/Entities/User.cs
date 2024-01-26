@@ -4,16 +4,17 @@ namespace GatewayService.Entities
 {
     public class User
     {
-        public User(string nom, string prenom, string email, string pass,string username)
+        public User(string nom, string prenom, string email, string password,string username,string gender)
         {
-            ValidatePassword(pass);
+            ValidatePassword(password);
             ValidateEmail(email);
             Id = GenerateUserId();
             Prenom = prenom;
             Nom = nom;
             Email = email;
-            Pass = pass;
+            Password = password;
             UserName = username;
+            Gender = gender;
         }
         private string GenerateUserId()
         {
@@ -43,18 +44,28 @@ namespace GatewayService.Entities
         public string? Prenom { get; set; }
         public string? Nom { get; set; }
         public string Email { get; set; }
-        public string Pass { get; set; }
-        public string NomComplet => Nom + " " + Prenom;
+        public string Password { get; set; }
         public string UserName { get; set; }
+        public string Gender { get; set; }
+        public string Role { get; set; }
     }
     public class UserLogin
     {
         public required string Email { get; set; }
-        public required string Pass { get; set; }
+        public required string Password { get; set; }
     }
     public class UserToken
     {
         public User? User { get; set; }
         public string? Token { get; set; }
+    }
+    public class UserModelUpdate
+    {
+        public string? Prenom { get; set; }
+        public string? Nom { get; set; }
+        public string? Email { get; set; }
+        public string? Username { get; set; }
+        public string? Gender { get; set; }
+        public string? Role { get; set; }
     }
 }

@@ -8,9 +8,9 @@ Les objectifs sont les suivants.
 
 Sur le front:
 - [X] Créer une page d'inscription
-- [ ] Modifier le login pour que le front communique avec la gateway et appel la route de login
-- [ ] Faire que la page d'inscription appel la gateway
-- [ ] Faire une page pour afficher un visuel de votre second micro service ( liste de tâches )
+- [X] Modifier le login pour que le front communique avec la gateway et appel la route de login
+- [X] Faire que la page d'inscription appel la gateway
+- [X] Faire une page pour afficher un visuel de votre second micro service ( liste de tâches )
 
 Sur la gateway:
 - [X] Créer la route register pour le user 
@@ -20,22 +20,22 @@ Sur la gateway:
 # Séance 3
 
 Sur le front:
-- [ ] Récuperer le JWT lors du login et le stocker dans le local storage
-- [ ] Ajouter le token JWT aux appels HTTP autre que login / register
-- [ ] Pouvoir lister les todo de l'utilisateur connecté
-- [ ] Pouvoir supprimer un todo
-- [ ] Pouvoir mettre à jour un todo
+- [X] Récuperer le JWT lors du login et le stocker dans le local storage
+- [X] Ajouter le token JWT aux appels HTTP autre que login / register
+- [X] Pouvoir lister les todo de l'utilisateur connecté
+- [X] Pouvoir supprimer un todo
+- [X] Pouvoir mettre à jour un todo
 
 Sur la gateway:
 - [X] Ajouter la gestion du JWT
-- [ ] Ajouter le JWT au swagger
+- [X] Ajouter le JWT au swagger
 - [X] Rendre certaine route [Authorized]
-- [ ] Récuperer l'id de l'utilisateur sur les route authentifié
-- [ ] Transmettre l'id au micro service todo pour ne récuperer que les données concernant notre utilisateur
+- [X] Récuperer l'id de l'utilisateur sur les route authentifié
+- [X] Transmettre l'id au micro service todo pour ne récuperer que les données concernant notre utilisateur
 
 Sur le micro service todo:
-- [ ] Ne renvoyer que les todo de notre utilisateur
-- [ ] Créer une classe TodoDb qui contiendra la liste des todos.
+- [X] Ne renvoyer que les todo de notre utilisateur
+- [X] Créer une classe TodoDb qui contiendra la liste des todos.
 - [ ] Ajouter la classe TodoDb dans le program.cs en tant que singleton
 - [ ] Utiliser cette classe dans le service todo
 
@@ -63,23 +63,23 @@ Vous pouvez heberger le projet sur github, gitlab, ... a votre convenance, tant 
 ## Contenu du projet
 
 J'attend que le projet rendu contienne a minima : 
-- [ ] 1 appli front en blazor
-- [ ] 1 microservice API Gateway
-- [ ] 1 microservice Utilisateur
-- [ ] 1 microservice pour la gestion des todos (ou autre)
+- [X] 1 appli front en blazor
+- [X] 1 microservice API Gateway
+- [X] 1 microservice Utilisateur
+- [X] 1 microservice pour la gestion des todos (ou autre)
 
 La notation dépendra principalement des points suivants:
-- [ ] Le front intéragit avec la gateway
-- [ ] La gateway intéragit avec les micro services
-- [ ] Le front permet la connexion/inscription d'un utilisateur
-- [ ] Une fois connecté le front dispose d'un token JWT qu'il utilise pour authentifier les requêtes a la gateway
-- [ ] Le front permet de visualiser/modifier/supprimer les données du microservice des todos
-- [ ] Les todos sont associés a un utilisateur, si je me connecte avec le compte A, je ne vois pas les todos de B et inversement
-- [ ] Les données sont validés/filtrés par la gateway, on interdit les mail avec des caractère spéciaux par exemple
+- [X] Le front intéragit avec la gateway
+- [X] La gateway intéragit avec les micro services
+- [X] Le front permet la connexion/inscription d'un utilisateur
+- [X] Une fois connecté le front dispose d'un token JWT qu'il utilise pour authentifier les requêtes a la gateway
+- [X] Le front permet de visualiser/modifier/supprimer les données du microservice des todos
+- [X] Les todos sont associés a un utilisateur, si je me connecte avec le compte A, je ne vois pas les todos de B et inversement
+- [X] Les données sont validés/filtrés par la gateway, on interdit les mail avec des caractère spéciaux par exemple
 
 Bonus (non exhaustif) :
-- [ ] Vous avez rajoutez un champ rôle aux utilisateurs (basique, admin), ceci nécessite de faire une migration et de l'appliquer en base
-- [ ] Vous affichez une page en plus sur le front en fonction du rôle de l'utilisateur (admin peux consulter la liste de tout les utilisateurs inscrit)
+- [X] Vous avez rajoutez un champ rôle aux utilisateurs (basique, admin), ceci nécessite de faire une migration et de l'appliquer en base
+- [X] Vous affichez une page en plus sur le front en fonction du rôle de l'utilisateur (admin peux consulter la liste de tout les utilisateurs inscrit)
 - [ ] Gestion des erreurs, si le login/pass est invalide j'affiche un message. Si une requête a la gateway renvoi une erreur, elle est géré
 - [ ] Les données du second micro service sont persisté (base de donnée, fichier, ...)
 - [ ] Bonne qualité de code (bien indenté, lisible)

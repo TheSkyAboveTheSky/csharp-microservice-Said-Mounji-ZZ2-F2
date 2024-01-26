@@ -25,6 +25,9 @@ namespace TaskService.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsChecked")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Titre")
                         .IsRequired()
                         .HasColumnType("TEXT");

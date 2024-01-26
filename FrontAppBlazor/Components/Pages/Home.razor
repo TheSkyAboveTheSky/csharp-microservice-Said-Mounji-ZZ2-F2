@@ -1,2 +1,27 @@
 ﻿@page "/"
-<Signin />
+@using FrontAppBlazor.Entities
+@using FrontAppBlazor.Services
+@inject JwtService JwtService
+@inject UserService UserService
+@inject TaskService TaskService
+@inject NavigationManager NavigationManager;
+@using Microsoft.AspNetCore.Mvc;
+@rendermode InteractiveServer
+
+@code {
+  protected override async System.Threading.Tasks.Task OnInitializedAsync()
+  {
+  }
+  protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      var isAuth = await JwtService.IsAuthenticated();
+      if (!isAuth)
+      {
+        NavigationManager.NavigateTo("/signin");
+      }
+    }
+  }
+
+}

@@ -16,9 +16,9 @@ namespace GatewayService.Controllers
       client = new HttpClient();
       client.BaseAddress = new System.Uri("http://localhost:5001/");
     }
-
+    [Authorize]
     [HttpGet]
-    public async Task<ActionResult> GetAllUsers(User user)
+    public async Task<ActionResult> GetAllUsers()
     {
       HttpResponseMessage response = await client.GetAsync($"api/User/");
       Console.WriteLine(response.Content);
@@ -34,7 +34,8 @@ namespace GatewayService.Controllers
         return BadRequest("GetAllUsers failed");
       }
     }
-    [HttpGet("/{id}")]
+    [Authorize]
+    [HttpGet("{id}")]
     public async Task<ActionResult> GetUserById(string id)
     {
       HttpResponseMessage response = await client.GetAsync($"api/User/{id}");
@@ -51,6 +52,7 @@ namespace GatewayService.Controllers
         return BadRequest("GetUserById failed");
       }
     }
+    [Authorize]
     [HttpDelete]
     public async Task<ActionResult> DeleteAllUsers()
     {
@@ -67,7 +69,8 @@ namespace GatewayService.Controllers
         return BadRequest("DeleteAllUsers failed");
       }
     }
-    [HttpDelete("/{id}")]
+    [Authorize]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUserById(string id)
     {
       HttpResponseMessage response = await client.DeleteAsync($"api/User/{id}");
@@ -81,6 +84,40 @@ namespace GatewayService.Controllers
       else
       {
         return BadRequest("DeleteUserById failed");
+      }
+    }
+    [Authorize]
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateUser(string id, User user)
+    {
+      HttpResponseMessage response = await client.PutAsJsonAsync($"api/User/{id}", user);
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        return Ok();
+      }
+      else
+      {
+        return BadRequest("UpdateUser failed");
+      }
+    }
+    [Authorize]
+    [HttpPatch("{id}")]
+    public async Task<ActionResult> PatchUser(string id, UserModelUpdate user)
+    {
+      HttpResponseMessage response = await client.PatchAsJsonAsync($"api/User/{id}", user);
+      Console.WriteLine(response.Content);
+      Console.WriteLine(response.StatusCode);
+
+      if (response.IsSuccessStatusCode)
+      {
+        return Ok();
+      }
+      else
+      {
+        return BadRequest("PatchUser failed");
       }
     }
     [HttpPost("register")]

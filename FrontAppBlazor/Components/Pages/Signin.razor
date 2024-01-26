@@ -1,5 +1,14 @@
 @page "/signin"
-@using Microsoft.AspNetCore.Components.Forms
+@using FrontAppBlazor.Services;
+@inject AuthentificationService AuthentificationService;
+@inject JwtService JwtService;
+@inject NavigationManager NavigationManager;
+@inject IJSRuntime JSRuntime;
+@using System.ComponentModel.DataAnnotations;
+@using Microsoft.AspNetCore.Components.Forms;
+@rendermode InteractiveServer
+
+
 <div>
     <section class="vh-100">
         <div class="container h-100">
@@ -10,33 +19,47 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign In</p>
-                                    <EditForm Model="@signInModel" OnValidSubmit="HandleSubmit">
+                                    <EditForm Model="@signInModel"
+                                        OnValidSubmit="@HandleSubmit"
+                                        FormName="myForm">
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
-                                                <InputText id="email" class="form-control" @bind-Value="signInModel.Email" />
-                                                <label class="form-label" for="email">Email</label>
+                                                <InputText id="email"
+                                                    class="form-control"
+                                                    @bind-Value="signInModel.Email" />
+                                                <label class="form-label"
+                                                    for="email">Email</label>
                                             </div>
                                         </div>
 
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
-                                                <InputText type="password" id="password" class="form-control" @bind-Value="signInModel.Password" />
-                                                <label class="form-label" for="password">Password</label>
+                                                <InputText type="password"
+                                                    id="password"
+                                                    class="form-control"
+                                                    @bind-Value="signInModel.Password" />
+                                                <label class="form-label"
+                                                    for="password">Password</label>
                                             </div>
                                         </div>
 
                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                            <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
+                                            <button type="submit"
+                                                class="btn btn-primary">Sign In</button>
                                         </div>
+
                                     </EditForm>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <a href="/signup" class="btn btn-secondary btn-lg">Create Account If You Don't have one</a>
+                                        <a href="/signup"
+                                            class="btn btn-secondary btn-lg">Create Account If You Don't have one</a>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                                    <img src="@image" class="img-fluid" alt="Sample image" />
+                                    <img src="@image"
+                                        class="img-fluid"
+                                        alt="Sample image" />
                                 </div>
                             </div>
                         </div>
@@ -51,14 +74,47 @@
     private SignInModel signInModel = new SignInModel();
     private string image = "/signin.jpg";
 
-    private void HandleSubmit()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-
+        if (firstRender)
+        {
+            var isAuth = await JwtService.IsAuthenticated();
+            if (isAuth)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
     }
+    private async void HandleSubmit()
+    {
+        var editContext = new EditContext(signInModel);
+
+        if (editContext.Validate())
+        {
+
+            var user = await AuthentificationService.AuthenticateUser(signInModel.Email, signInModel.Password);
+
+            if (user != null)
+            {
+                NavigationManager.NavigateTo("/tasks");
+                await JSRuntime.InvokeVoidAsync("alert", "Login successful!");
+            }
+            else
+            {
+                await JSRuntime.InvokeVoidAsync("alert", "Error: Invalid email or password.");
+            }
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Error: Invalid form submission. Please check your inputs.");
+        }
+    }
+
 
     public class SignInModel
     {
         public string Email { get; set; }
+
         public string Password { get; set; }
     }
 }

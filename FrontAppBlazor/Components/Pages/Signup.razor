@@ -1,5 +1,13 @@
 @page "/signup"
-@using Microsoft.AspNetCore.Components.Forms
+@using FrontAppBlazor.Services;
+@inject AuthentificationService AuthentificationService;
+@inject JwtService JwtService;
+@inject NavigationManager NavigationManager;
+@inject IJSRuntime JSRuntime;
+@using System.ComponentModel.DataAnnotations;
+@using Microsoft.AspNetCore.Components.Forms;
+@rendermode InteractiveServer
+
 <div>
   <section class="vh-100">
     <div class="container h-100">
@@ -10,58 +18,96 @@
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign Up</p>
-                  <EditForm Model="@signUpModel" OnValidSubmit="HandleSubmit">
+                  <EditForm Model="@signUpModel"
+                    OnValidSubmit="HandleSubmit"
+                    FormName="myForm">
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <InputText id="nom" class="form-control" @bind-Value="signUpModel.Nom" />
-                        <label class="form-label" for="nom">Nom</label>
+                        <InputText id="nom"
+                          class="form-control"
+                          @bind-Value="signUpModel.Nom" />
+                        <label class="form-label"
+                          for="nom">Nom</label>
                       </div>
                     </div>
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <InputText id="prenom" class="form-control" @bind-Value="signUpModel.Prenom" />
-                        <label class="form-label" for="prenom">Prenom</label>
+                        <InputText id="prenom"
+                          class="form-control"
+                          @bind-Value="signUpModel.Prenom" />
+                        <label class="form-label"
+                          for="prenom">Prenom</label>
                       </div>
                     </div>
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <InputText id="username" class="form-control" @bind-Value="signUpModel.Username" />
-                        <label class="form-label" for="username">Username</label>
+                        <InputText id="username"
+                          class="form-control"
+                          @bind-Value="signUpModel.Username" />
+                        <label class="form-label"
+                          for="username">Username</label>
                       </div>
                     </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-venus-mars fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <select id="gender"
+                          class="form-select"
+                          @bind="signUpModel.Gender">
+                          <option value="">Select Gender</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                        <label class="form-label"
+                          for="gender">Gender</label>
+                      </div>
+                    </div>
+
+
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <InputText id="email" class="form-control" @bind-Value="signUpModel.Email" />
-                        <label class="form-label" for="email">Email</label>
+                        <InputText id="email"
+                          class="form-control"
+                          @bind-Value="signUpModel.Email" />
+                        <label class="form-label"
+                          for="email">Email</label>
                       </div>
                     </div>
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <InputText type="password" id="password" class="form-control" @bind-Value="signUpModel.Password" />
-                        <label class="form-label" for="password">Password</label>
+                        <InputText type="password"
+                          id="password"
+                          class="form-control"
+                          @bind-Value="signUpModel.Password" />
+                        <label class="form-label"
+                          for="password">Password</label>
                       </div>
                     </div>
 
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                      <button type="submit"
+                        class="btn btn-primary">Sign Up</button>
                     </div>
                   </EditForm>
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <a href="/signin" class="btn btn-primary btn-lg">Sign In If You Already have an account</a>
+                    <a href="/signin"
+                      class="btn btn-secondary btn-lg">Sign In If You Already have an account</a>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                  <img src="@image" class="img-fluid" alt="Sample image" />
+                  <img src="@image"
+                    class="img-fluid"
+                    alt="Sample image" />
                 </div>
               </div>
             </div>
@@ -76,8 +122,42 @@
   private SignUpModel signUpModel = new SignUpModel();
   private string image = "/signup.jpg";
 
-  private void HandleSubmit()
+  protected override async Task OnAfterRenderAsync(bool firstRender)
   {
+    if (firstRender)
+    {
+      var isAuth = await JwtService.IsAuthenticated();
+      if (isAuth)
+      {
+        NavigationManager.NavigateTo("/");
+
+      }
+
+    }
+  }
+  private async void HandleSubmit()
+  {
+    var editContext = new EditContext(signUpModel);
+    if (editContext.Validate())
+    {
+      var user = await
+      AuthentificationService.RegisterUser(signUpModel.Prenom, signUpModel.Nom, signUpModel.Email, signUpModel.Password,
+      signUpModel.Username, signUpModel.Gender);
+
+      if (user != null)
+      {
+        NavigationManager.NavigateTo("/tasks");
+        await JSRuntime.InvokeVoidAsync("alert", "Register Successfully");
+      }
+      else
+      {
+        await JSRuntime.InvokeVoidAsync("alert", "Error: Register Failed.");
+      }
+    }
+    else
+    {
+      await JSRuntime.InvokeVoidAsync("alert", "Error: Invalid form submission. Please check your inputs.");
+    }
   }
 
   public class SignUpModel
@@ -87,5 +167,7 @@
     public string Email { get; set; }
     public string Password { get; set; }
     public string Username { get; set; }
+    public string Gender { get; set; }
+
   }
 }

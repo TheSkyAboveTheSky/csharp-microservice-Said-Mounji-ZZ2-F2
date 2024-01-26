@@ -1,0 +1,315 @@
+@page "/myTasks"
+@using FrontAppBlazor.Services
+@using FrontAppBlazor.Entities
+@inject JwtService JwtService
+@inject UserService UserService
+@inject TaskService TaskService
+@inject AuthentificationService AuthentificationService
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Mvc
+@rendermode InteractiveServer
+
+<section class="vh-100"
+  style="background-color: white;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">My Task List</h4>
+
+            <div class="col-12 d-flex justify-content-between">
+              <button class="btn btn-primary"
+                @onclick="ShowCreateTaskModal">Create New Task</button>
+              <button class="btn btn-danger"
+                @onclick="DeleteAllTasks">Delete All Tasks</button>
+            </div>
+
+
+            <table class="table mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (tasks != null)
+                {
+                  var index = 1;
+                  @foreach (var task in tasks)
+                  {
+                    <tr>
+                      <th scope="row">@index</th>
+                      <td style="@GetTextStyle(task)">@task.Titre</td>
+                      <td style="@GetTextStyle(task)">@task.Description</td>
+                      <td>@(task.IsChecked ? "Completed" : "In Progress")</td>
+                      <td>
+                        <button type="submit"
+                          class="btn btn-danger"
+                          @onclick="() => DeleteTask(task.Id)">
+                          <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <button type="submit"
+                          class="btn btn-success ms-1"
+                          @onclick="() => ToggleTask(task)">
+                          <i class="fas fa-check"></i> Change State
+                        </button>
+                        <button type="submit"
+                          class="btn btn-primary ms-1"
+                          @onclick="() => ShowUpdateTaskButton(task.Id,task.Titre,task.Description)">
+                          <i class="fas fa-edit"></i> Edit
+                        </button>
+                      </td>
+                    </tr>
+                    index++;
+                  }
+                }
+                else
+                {
+                  <tr>
+                    <td colspan="5">No tasks found</td>
+                  </tr>
+                }
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+@if (showCreateTaskModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Task</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideCreateTaskModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter title"
+                @bind="newTaskTitle">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                id="description"
+                rows="3"
+                placeholder="Enter description"
+                @bind="newTaskDescription"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideCreateTaskModal">Close</button>
+          <button type="button"
+            class="btn btn-primary"
+            @onclick="CreateNewTask">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@if (showUpdateTaskModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Task</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideUpdateTaskModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter title"
+                @bind="updateTaskTitle">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                id="description"
+                rows="3"
+                placeholder="Enter description"
+                @bind="updateTaskDescription"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideUpdateTaskModal">Close</button>
+          <button class="btn btn-primary"
+            @onclick="() => UpdateTask(updateTaskId)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@code {
+  private Entities.Task[] tasks;
+  private bool showCreateTaskModal = false;
+  private bool showUpdateTaskModal = false;
+  private string newTaskTitle;
+  private string newTaskDescription;
+  private string updateTaskTitle;
+  private string updateTaskDescription;
+  private string updateTaskId;
+
+  protected override async System.Threading.Tasks.Task OnInitializedAsync()
+  {
+    tasks = await TaskService.GetAllTasks();
+  }
+  protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      tasks = await TaskService.GetUserTasks();
+      var isAuth = await JwtService.IsAuthenticated();
+      if (!isAuth)
+      {
+        NavigationManager.NavigateTo("/signin");
+      }
+    }
+  }
+
+  private async System.Threading.Tasks.Task DeleteTask(string id)
+  {
+    try
+    {
+      await TaskService.DeleteTaskById(id);
+      tasks = await TaskService.GetUserTasks();
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while deleting task: {ex.Message}");
+    }
+  }
+
+  private async System.Threading.Tasks.Task DeleteAllTasks()
+  {
+    try
+    {
+      await TaskService.DeleteAllUserTasks();
+      tasks = await TaskService.GetUserTasks();
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while deleting all tasks: {ex.Message}");
+    }
+  }
+
+  private async System.Threading.Tasks.Task CreateNewTask()
+  {
+    try
+    {
+      var userID = await AuthentificationService.GetId();
+      var newTask = new Entities.Task(newTaskTitle, newTaskDescription, userID);
+      await TaskService.CreateTask(newTask);
+      tasks = await TaskService.GetUserTasks();
+      HideCreateTaskModal();
+      newTaskDescription = "";
+      newTaskTitle = "";
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new task: {ex.Message}");
+    }
+  }
+  private async System.Threading.Tasks.Task UpdateTask(string id)
+  {
+    try
+    {
+      var userID = await AuthentificationService.GetId();
+      ShowUpdateTaskModal();
+      await TaskService.PatchTask(id, new TaskModelUpdate()
+        {
+          Titre = updateTaskTitle,
+          Description = updateTaskDescription,
+          UserId = userID
+        });
+      tasks = await TaskService.GetUserTasks();
+      HideUpdateTaskModal();
+      updateTaskDescription = "";
+      updateTaskTitle = "";
+      updateTaskId = "";
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new task: {ex.Message}");
+    }
+  }
+  private void ShowCreateTaskModal()
+  {
+    showCreateTaskModal = true;
+  }
+
+  private void HideCreateTaskModal()
+  {
+    showCreateTaskModal = false;
+  }
+  private void ShowUpdateTaskModal()
+  {
+    showUpdateTaskModal = true;
+  }
+
+  private void HideUpdateTaskModal()
+  {
+    showUpdateTaskModal = false;
+  }
+  private void ShowUpdateTaskButton(string id, string title, string description)
+  {
+    updateTaskTitle = title;
+    updateTaskDescription = description;
+    updateTaskId = id;
+    showUpdateTaskModal = true;
+  }
+  private string GetTextStyle(Entities.Task task)
+  {
+    return task.IsChecked ? "text-decoration: line-through;" : "";
+  }
+  private async System.Threading.Tasks.Task ToggleTask(Entities.Task task)
+  {
+    task.IsChecked = !task.IsChecked;
+    await TaskService.UpdateTask(task.Id, task);
+  }
+
+}

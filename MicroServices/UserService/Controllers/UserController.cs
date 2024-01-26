@@ -23,7 +23,6 @@ namespace UserService.Controllers
             _context = context;
             _passwordHasher = passwordHasher;
         }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -75,13 +74,52 @@ namespace UserService.Controllers
 
             return NoContent();
         }
-
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(string id, User user)
+        {
+            user.Id = id;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchUser(string id, UserModelUpdate user)
+        {
+            var userFromDb = await _context.User.FindAsync(id);
+            if (user.Prenom != null)
+            {
+                userFromDb.Prenom = user.Prenom;
+            }
+            if (user.Nom != null)
+            {
+                userFromDb.Nom = user.Nom;
+            }
+            if (user.Email != null)
+            {
+                userFromDb.Email = user.Email;
+            }
+            if (user.Username != null)
+            {
+                userFromDb.Username = user.Username;
+            }
+            if (user.Gender != null)
+            {
+                userFromDb.Gender = user.Gender;
+            }
+            if (user.Role != null)
+            {
+                userFromDb.Role = user.Role;
+            }
+            _context.Entry(userFromDb).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
         [HttpPost("register")]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
             if (await IsEmailUnique(user.Email))
             {
-                user.Pass = _passwordHasher.HashPassword(user, user.Pass);
+                user.Password = _passwordHasher.HashPassword(user, user.Password);
 
                 _context.User.Add(user);
                 await _context.SaveChangesAsync();
@@ -108,7 +146,7 @@ namespace UserService.Controllers
                 return NotFound();
             }
 
-            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(userFromDb, userFromDb.Pass, userlogin.Pass);
+            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(userFromDb, userFromDb.Password, userlogin.Password);
 
             if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
@@ -148,5 +186,7 @@ namespace UserService.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
     }
 }
