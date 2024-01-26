@@ -25,6 +25,7 @@ namespace FrontAppBlazor.Services
         {
           await _sessionStorage.SetAsync("jwt", result.Token);
           await _sessionStorage.SetAsync("id", result.User.Id.ToString());
+          await _sessionStorage.SetAsync("role", result.User.Role.ToString());
 
           return result.User;
         }
@@ -42,6 +43,8 @@ namespace FrontAppBlazor.Services
         {
           await _sessionStorage.SetAsync("jwt", result.Token);
           await _sessionStorage.SetAsync("id", result.User.Id.ToString());
+          await _sessionStorage.SetAsync("role", result.User.Role.ToString());
+
           return result.User;
         }
       }
@@ -51,6 +54,7 @@ namespace FrontAppBlazor.Services
     {
       await _sessionStorage.DeleteAsync("jwt");
       await _sessionStorage.DeleteAsync("id");
+      await _sessionStorage.DeleteAsync("role");
     }
     public async Task<String> GetId()
     {
@@ -61,6 +65,16 @@ namespace FrontAppBlazor.Services
     {
       var token = await _sessionStorage.GetAsync<string>("jwt");
       return token.Value;
+    }
+    public async Task<String> GetRole()
+    {
+      var role = await _sessionStorage.GetAsync<string>("role");
+      return role.Value;
+    }
+    public async Task<bool> IsAdmin()
+    {
+      var role = await GetRole();
+      return role == "Admin";
     }
   }
 }

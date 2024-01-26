@@ -33,6 +33,7 @@
                     <th class="w100">Username</th>
                     <th class="w100">Email</th>
                     <th class="w100">Gender</th>
+                    <th class="w100">Role</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -49,7 +50,13 @@
                         <td class="text-right">@user.Prenom</td>
                         <td class="text-right">@user.Username</td>
                         <td class="text-right">@user.Email</td>
-                        <td class="text-right">@user.Gender</td>
+                        <td class="text-right">
+                          <span class="badge @($"bg-{(user.Gender == "Male" ? "primary" : "danger")}")">@user.Gender</span>
+                        </td>
+                        <td class="text-right">
+                          <span class="badge @($"bg-{(user.Role == "Admin" ? "danger" : "primary")}")">@user.Role</span>
+                        </td>
+
                         <td>
                           <button class="btn btn-sm"
                             style="color: red; margin: 1rem;"
@@ -58,10 +65,27 @@
                           </button>
                           <button class="btn btn-sm"
                             style="color: blue;"
-                            @onclick="() => ShowUpdateUserButton(user.Id,user.Prenom,user.Nom,user.Username,user.Email,user.Gender)">
+                            @onclick="() => ShowUpdateUserButton(user.Id, user.Prenom, user.Nom, user.Username, user.Email, user.Gender)">
                             <i class="fa fa-pen-to-square"></i>
                           </button>
+                          @if (user.Role == "User")
+                          {
+                            <button class="btn btn-success"
+                              style=" margin: 1rem;"
+                              @onclick="() => ToggleAdminRole(user.Id,user.Role)">
+                              Add as Admin
+                            </button>
+                          }
+                          else
+                          {
+                            <button class="btn btn-warning"
+                              style=" margin: 1rem;"
+                              @onclick="() => ToggleAdminRole(user.Id,user.Role)">
+                              Remove as Admin
+                            </button>
+                          }
                         </td>
+
                       </tr>
                     }
                   }
@@ -377,5 +401,34 @@
     updateUserId = id;
     showUpdateUserModal = true;
   }
+  private async System.Threading.Tasks.Task ToggleAdminRole(string id, string role)
+  {
+    try
+    {
+      if (role == "User")
+      {
+        var user = new UserModelUpdate()
+          {
+            Role = "Admin"
+          };
+        await UserService.UpdateUser(id, user);
+      }
+      else
+      {
+        var user = new UserModelUpdate()
+          {
+            Role = "User"
+          };
+        await UserService.UpdateUser(id, user);
+      }
+
+      users = await UserService.GetAllUsers();
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while toggling user role: {ex.Message}");
+    }
+  }
+
 
 }

@@ -37,23 +37,39 @@
                 }
                 else
                 {
-                    <li class="nav-item">
-                        <NavLink class="nav-link"
-                            href="/mytasks">My TASKS</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link"
-                            href="/tasks">TASKS</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link"
-                            href="/users">USERS</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link"
-                            href="/logout"
-                            @onclick="Logout">LOGOUT</NavLink>
-                    </li>
+                    @if (isAdmin)
+                    {
+                        <li class="nav-item">
+                            <NavLink class="nav-link"
+                                href="/mytasks">My TASKS</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link"
+                                href="/tasks">TASKS</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link"
+                                href="/users">USERS</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link"
+                                href="/logout"
+                                @onclick="Logout">LOGOUT</NavLink>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <NavLink class="nav-link"
+                                href="/mytasks">My TASKS</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link"
+                                href="/logout"
+                                @onclick="Logout">LOGOUT</NavLink>
+                        </li>
+                    }
                 }
             </ul>
         </div>
@@ -66,6 +82,7 @@
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
     private bool isAuth;
+    private bool isAdmin;
 
     private void ToggleNavMenu()
     {
@@ -77,6 +94,7 @@
         if (firstRender)
         {
             isAuth = await JwtService.IsAuthenticated();
+            isAdmin = await AuthentificationService.IsAdmin();
             StateHasChanged();
         }
     }
