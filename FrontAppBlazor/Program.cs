@@ -30,6 +30,7 @@ builder.Services.AddScoped<AuthentificationService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TaskService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<ProjectService>();
 builder.Services.AddAuthorization();
 
 builder.Services

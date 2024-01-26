@@ -1,0 +1,381 @@
+@page "/myprojects"
+@using FrontAppBlazor.Services
+@using FrontAppBlazor.Entities
+@inject JwtService JwtService
+@inject UserService UserService
+@inject TaskService TaskService
+@inject ProjectService ProjectService
+@inject AuthentificationService AuthentificationService
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Mvc
+@rendermode InteractiveServer
+
+<section class="vh-100"
+  style="background-color: white;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">Project List</h4>
+
+            <div class="col-12 d-flex justify-content-between">
+              <button class="btn btn-primary"
+                @onclick="ShowCreateProjectModal">Create New Project</button>
+              <button class="btn btn-danger"
+                @onclick="DeleteAllProjects">Delete All Projects</button>
+            </div>
+
+
+            <table class="table mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Group</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (projects != null)
+                {
+                  var index = 1;
+                  @foreach (var project in projects)
+                  {
+                    @if (project.GroupId == userGroupId)
+                    {
+                      <tr>
+                        <th scope="row">@index</th>
+                        <td>@project.Nom</td>
+                        <td>@project.Description</td>
+                        <td>
+                          @if (project.Status == "UpComing")
+                          {
+                            <span class="badge bg-primary">UpComing</span>
+                          }
+                          else if (project.Status == "OnGoing")
+                          {
+                            <span class="badge bg-success">OnGoing</span>
+                          }
+                          else if (project.Status == "Completed")
+                          {
+                            <span class="badge bg-danger">Completed</span>
+                          }
+                          else
+                          {
+                            <span class="badge bg-secondary">@project.Status</span>
+                          }
+                        </td>
+
+                        <td class="text-right">
+                          @if (project.GroupId == 0)
+                          {
+                            <span class="badge bg-warning">Not Affected</span>
+                          }
+                          else
+                          {
+                            <span class="badge bg-primary">
+                              @($"Group {project.GroupId}")
+                            </span>
+                          }
+                        </td>
+                        <td>
+                          <div class="btn-group"
+                            role="group">
+                            <button type="submit"
+                              class="btn btn-sm btn-danger"
+                              @onclick="() => DeleteProject(project.Id)">
+                              <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="submit"
+                              class="btn btn-sm btn-success ms-1"
+                              @onclick="() => ShowUpdateProjectButton(project.Id, project.Nom, project.Description, project.GroupId, project.Status)">
+                              <i class="fas fa-check"></i> Change State
+                            </button>
+                            <button type="submit"
+                              class="btn btn-sm btn-primary ms-1"
+                              @onclick="() => ShowUpdateProjectButton(project.Id, project.Nom, project.Description, project.GroupId, project.Status)">
+                              <i class="fas fa-edit"></i> Edit
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      index++;
+                    }
+                  }
+                }
+                else
+                {
+                  <tr>
+                    <td colspan="5">No projects found</td>
+                  </tr>
+                }
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+@if (showCreateProjectModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Project</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideCreateProjectModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="nom">Title</label>
+              <input type="text"
+                class="form-control"
+                id="nom"
+                placeholder="Enter Nom"
+                @bind="newProjectTitle">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                id="description"
+                rows="3"
+                placeholder="Enter description"
+                @bind="newProjectDescription"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select class="form-control"
+                id="status"
+                @bind="newProjectStatus">
+                <option value="">Select Status</option>
+                <option value="UpComing">UpComing</option>
+                <option value="OnGoing">OnGoing</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideCreateProjectModal">Close</button>
+          <button type="button"
+            class="btn btn-primary"
+            @onclick="CreateNewProject">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@if (showUpdateProjectModal)
+{
+  <div class="modal"
+    tabindex="-1"
+    role="dialog"
+    style="display: block; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Project</h5>
+          <button type="button"
+            class="close"
+            aria-label="Close"
+            @onclick="HideUpdateProjectModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter title"
+                @bind="updateProjectTitle">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                id="description"
+                rows="3"
+                placeholder="Enter description"
+                @bind="updateProjectDescription"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="update-status">Status</label>
+              <select class="form-control"
+                id="update-status"
+                @bind="updateProjectStatus">
+                <option value="">Select Status</option>
+                <option value="UpComing">UpComing</option>
+                <option value="OnGoing">OnGoing</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+            class="btn btn-secondary"
+            @onclick="HideUpdateProjectModal">Close</button>
+          <button class="btn btn-primary"
+            @onclick="() => UpdateProject(updateProjectId)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@code {
+  private Entities.Project[] projects;
+  private bool showCreateProjectModal = false;
+  private bool showUpdateProjectModal = false;
+  private string newProjectTitle;
+  private string newProjectDescription;
+  private string newProjectStatus;
+  private string updateProjectTitle;
+  private string updateProjectDescription;
+  private string updateProjectStatus;
+  private string updateProjectId;
+  private int userGroupId = 0;
+
+  protected override async System.Threading.Tasks.Task OnInitializedAsync()
+  {
+    projects = await ProjectService.GetAllProjects();
+  }
+  protected override async System.Threading.Tasks.Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      projects = await ProjectService.GetProjectsByGroupId();
+      userGroupId = int.Parse(await AuthentificationService.GetGroup());
+      var isAuth = await JwtService.IsAuthenticated();
+      if (!isAuth)
+      {
+        NavigationManager.NavigateTo("/signin");
+      }
+    }
+  }
+
+  private async System.Threading.Tasks.Task DeleteProject(string id)
+  {
+    try
+    {
+      await ProjectService.DeleteProject(id);
+      projects = await ProjectService.GetProjectsByGroupId();
+      NavigationManager.NavigateTo("/myprojects");
+
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while deleting project: {ex.Message}");
+    }
+  }
+
+  private async System.Threading.Tasks.Task DeleteAllProjects()
+  {
+    try
+    {
+      await ProjectService.DeleteProjectsByGroupId();
+      projects = await ProjectService.GetProjectsByGroupId();
+      NavigationManager.NavigateTo("/myprojects");
+
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while deleting all projects: {ex.Message}");
+    }
+  }
+  private async System.Threading.Tasks.Task CreateNewProject()
+  {
+    try
+    {
+      var groupId = await AuthentificationService.GetGroup();
+      var newProject = new Entities.Project(newProjectTitle, newProjectDescription, int.Parse(groupId), newProjectStatus);
+      await ProjectService.CreateProject(newProject);
+      projects = await ProjectService.GetAllProjects();
+      NavigationManager.NavigateTo("/myprojects");
+
+      HideCreateProjectModal();
+      newProjectDescription = "";
+      newProjectTitle = "";
+      newProjectStatus = "UpComing";
+
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new project: {ex.Message}");
+    }
+  }
+  private async System.Threading.Tasks.Task UpdateProject(string id)
+  {
+    try
+    {
+      ShowUpdateProjectModal();
+      await ProjectService.UpdateProject(id, new ProjectModelUpdate()
+        {
+          Nom = updateProjectTitle,
+          Description = updateProjectDescription,
+          Status = updateProjectStatus,
+
+        });
+      projects = await ProjectService.GetProjectsByGroupId();
+      NavigationManager.NavigateTo("/myprojects");
+
+      HideUpdateProjectModal();
+      updateProjectDescription = "";
+      updateProjectTitle = "";
+      updateProjectStatus = "UpComing";
+      updateProjectId = "";
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"An error occurred while creating new project: {ex.Message}");
+    }
+  }
+  private void ShowCreateProjectModal()
+  {
+    showCreateProjectModal = true;
+  }
+
+  private void HideCreateProjectModal()
+  {
+    showCreateProjectModal = false;
+  }
+  private void ShowUpdateProjectModal()
+  {
+    showUpdateProjectModal = true;
+  }
+
+  private void HideUpdateProjectModal()
+  {
+    showUpdateProjectModal = false;
+  }
+  private void ShowUpdateProjectButton(string id, string title, string description, int groupId, string status)
+  {
+    updateProjectTitle = title;
+    updateProjectDescription = description;
+    updateProjectId = id;
+    updateProjectStatus = status;
+    showUpdateProjectModal = true;
+  }
+}

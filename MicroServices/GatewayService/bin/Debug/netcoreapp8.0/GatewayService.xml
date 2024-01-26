@@ -4,6 +4,62 @@
         <name>GatewayService</name>
     </assembly>
     <members>
+        <member name="M:GatewayService.Controllers.ProjectController.GetAllProjects">
+            <summary>
+            Retrieves all projects.
+            </summary>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.GetProjectById(System.String)">
+            <summary>
+            Retrieves a project by id.
+            </summary>
+            <param name="id">Id of the project</param>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.GetProjectsByGroupId(System.String)">
+            <summary>
+            Retrieves all projects by group id.
+            </summary>
+            <param name="groupId">Id of the group</param>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.DeleteProjectById(System.String)">
+            <summary>
+             Delete a project by id.
+            </summary>
+            <param name="id">Id of the project</param>
+            <returns></returns>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.DeleteAllProjects">
+            <summary>
+            Delete all projects.
+            </summary>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.DeleteProjectsByGroupId(System.String)">
+            <summary>
+            Delete all projects by group id.
+            </summary>
+            <param name="groupId">Id of the group</param>
+            <returns></returns>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.CreateProject(GatewayService.Entities.Project)">
+            <summary>
+            Create a project.
+            </summary>
+            <param name="project">Project object</param>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.UpdateProject(System.String,GatewayService.Entities.Project)">
+            <summary>
+            Update a project.
+            </summary>
+            <param name="id">Id of the project</param>
+            <param name="project">Project object</param>
+        </member>
+        <member name="M:GatewayService.Controllers.ProjectController.PatchProject(System.String,GatewayService.Entities.ProjectModelUpdate)">
+            <summary>
+            Patch a project.
+            </summary>
+            <param name="id">Id of the project</param>
+            <param name="project">Project object</param>
+        </member>
         <member name="M:GatewayService.Controllers.TaskController.GetAllTasks">
             <summary>
             Retrieves all tasks.

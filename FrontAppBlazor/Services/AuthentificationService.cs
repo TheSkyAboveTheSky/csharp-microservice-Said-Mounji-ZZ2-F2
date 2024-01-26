@@ -25,6 +25,7 @@ namespace FrontAppBlazor.Services
           await _sessionStorage.SetAsync("jwt", result.Token);
           await _sessionStorage.SetAsync("id", result.User.Id.ToString());
           await _sessionStorage.SetAsync("role", result.User.Role.ToString());
+          await _sessionStorage.SetAsync("group", result.User.GroupId.ToString());
 
           return result.User;
         }
@@ -40,9 +41,11 @@ namespace FrontAppBlazor.Services
         var result = await response.Content.ReadFromJsonAsync<UserToken>();
         if (result != null)
         {
-          await _sessionStorage.SetAsync("jwt", result.Token );
-          await _sessionStorage.SetAsync("id", result.User.Id.ToString() );
+          await _sessionStorage.SetAsync("jwt", result.Token);
+          await _sessionStorage.SetAsync("id", result.User.Id.ToString());
           await _sessionStorage.SetAsync("role", result.User.Role.ToString());
+          await _sessionStorage.SetAsync("group", result.User.GroupId.ToString());
+
 
           return result.User;
         }
@@ -54,6 +57,7 @@ namespace FrontAppBlazor.Services
       await _sessionStorage.DeleteAsync("jwt");
       await _sessionStorage.DeleteAsync("id");
       await _sessionStorage.DeleteAsync("role");
+      await _sessionStorage.DeleteAsync("group");
     }
     public async Task<String> GetId()
     {
@@ -63,12 +67,17 @@ namespace FrontAppBlazor.Services
     public async Task<String> GetToken()
     {
       var token = await _sessionStorage.GetAsync<string>("jwt");
-      return token.Value ;
+      return token.Value;
     }
     public async Task<String> GetRole()
     {
       var role = await _sessionStorage.GetAsync<string>("role");
       return role.Value;
+    }
+    public async Task<String> GetGroup()
+    {
+      var group = await _sessionStorage.GetAsync<string>("group");
+      return group.Value;
     }
     public async Task<bool> IsAdmin()
     {

@@ -43,30 +43,34 @@
                   var index = 1;
                   @foreach (var task in tasks)
                   {
-                    <tr>
-                      <th scope="row">@index</th>
-                      <td style="@GetTextStyle(task)">@task.Titre</td>
-                      <td style="@GetTextStyle(task)">@task.Description</td>
-                      <td>@(task.IsChecked ? "Completed" : "In Progress")</td>
-                      <td>
-                        <button type="submit"
-                          class="btn btn-danger"
-                          @onclick="() => DeleteTask(task.Id)">
-                          <i class="fas fa-trash"></i> Delete
-                        </button>
-                        <button type="submit"
-                          class="btn btn-success ms-1"
-                          @onclick="() => ToggleTask(task)">
-                          <i class="fas fa-check"></i> Change State
-                        </button>
-                        <button type="submit"
-                          class="btn btn-primary ms-1"
-                          @onclick="() => ShowUpdateTaskButton(task.Id,task.Titre,task.Description)">
-                          <i class="fas fa-edit"></i> Edit
-                        </button>
-                      </td>
-                    </tr>
-                    index++;
+                    @if (task.UserId == userId)
+                    {
+                      <tr>
+                        <th scope="row">@index</th>
+                        <td style="@GetTextStyle(task)">@task.Titre</td>
+                        <td style="@GetTextStyle(task)">@task.Description</td>
+                        <td>@(task.IsChecked ? "Completed" : "In Progress")</td>
+                        <td>
+                          <button type="submit"
+                            class="btn btn-danger"
+                            @onclick="() => DeleteTask(task.Id)">
+                            <i class="fas fa-trash"></i> Delete
+                          </button>
+                          <button type="submit"
+                            class="btn btn-success ms-1"
+                            @onclick="() => ToggleTask(task)">
+                            <i class="fas fa-check"></i> Change State
+                          </button>
+                          <button type="submit"
+                            class="btn btn-primary ms-1"
+                            @onclick="() => ShowUpdateTaskButton(task.Id,task.Titre,task.Description)">
+                            <i class="fas fa-edit"></i> Edit
+                          </button>
+                        </td>
+                      </tr>
+                      index++;
+
+                    }
                   }
                 }
                 else
@@ -193,6 +197,7 @@
   private string updateTaskTitle;
   private string updateTaskDescription;
   private string updateTaskId;
+  private string userId;
 
   protected override async System.Threading.Tasks.Task OnInitializedAsync()
   {
@@ -203,6 +208,7 @@
     if (firstRender)
     {
       tasks = await TaskService.GetUserTasks();
+      userId = await AuthentificationService.GetId();
       var isAuth = await JwtService.IsAuthenticated();
       if (!isAuth)
       {
@@ -217,6 +223,7 @@
     {
       await TaskService.DeleteTaskById(id);
       tasks = await TaskService.GetUserTasks();
+      NavigationManager.NavigateTo("/mytasks");
     }
     catch (Exception ex)
     {
@@ -230,6 +237,8 @@
     {
       await TaskService.DeleteAllUserTasks();
       tasks = await TaskService.GetUserTasks();
+      NavigationManager.NavigateTo("/mytasks");
+
     }
     catch (Exception ex)
     {
@@ -245,6 +254,8 @@
       var newTask = new Entities.Task(newTaskTitle, newTaskDescription, userID);
       await TaskService.CreateTask(newTask);
       tasks = await TaskService.GetUserTasks();
+      NavigationManager.NavigateTo("/mytasks");
+
       HideCreateTaskModal();
       newTaskDescription = "";
       newTaskTitle = "";
@@ -267,6 +278,8 @@
           UserId = userID
         });
       tasks = await TaskService.GetUserTasks();
+      NavigationManager.NavigateTo("/mytasks");
+
       HideUpdateTaskModal();
       updateTaskDescription = "";
       updateTaskTitle = "";
