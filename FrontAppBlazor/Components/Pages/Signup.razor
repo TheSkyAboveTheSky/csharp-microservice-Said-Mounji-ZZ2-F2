@@ -53,6 +53,22 @@
                           for="username">Username</label>
                       </div>
                     </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-venus-mars fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <select id="gender"
+                          class="form-select"
+                          @bind="signUpModel.Gender">
+                          <option value="">Select Gender</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                        <label class="form-label"
+                          for="gender">Gender</label>
+                      </div>
+                    </div>
+
+
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
@@ -125,7 +141,8 @@
     if (editContext.Validate())
     {
       var user = await
-      AuthentificationService.RegisterUser(signUpModel.Prenom, signUpModel.Nom, signUpModel.Email, signUpModel.Password, signUpModel.Username);
+      AuthentificationService.RegisterUser(signUpModel.Prenom, signUpModel.Nom, signUpModel.Email, signUpModel.Password,
+      signUpModel.Username, signUpModel.Gender);
 
       if (user != null)
       {
@@ -150,5 +167,7 @@
     public string Email { get; set; }
     public string Password { get; set; }
     public string Username { get; set; }
+    public string Gender { get; set; }
+
   }
 }

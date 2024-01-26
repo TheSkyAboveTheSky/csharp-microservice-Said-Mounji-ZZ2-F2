@@ -10,7 +10,7 @@ using UserService.Data;
 namespace UserService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240124154000_Init")]
+    [Migration("20240126014502_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -28,17 +28,28 @@ namespace UserService.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Nom")
+                    b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Pass")
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Prenom")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

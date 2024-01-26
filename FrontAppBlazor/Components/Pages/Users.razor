@@ -32,6 +32,7 @@
                     <th class="w100">Prenom</th>
                     <th class="w100">Username</th>
                     <th class="w100">Email</th>
+                    <th class="w100">Gender</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,7 @@
                         <td class="text-right">@user.Prenom</td>
                         <td class="text-right">@user.Username</td>
                         <td class="text-right">@user.Email</td>
+                        <td class="text-right">@user.Gender</td>
                         <td>
                           <button class="btn btn-sm"
                             style="color: red; margin: 1rem;"
@@ -56,7 +58,7 @@
                           </button>
                           <button class="btn btn-sm"
                             style="color: blue;"
-                            @onclick="() => ShowUpdateUserButton(user.Id,user.Prenom,user.Nom,user.Username,user.Email)">
+                            @onclick="() => ShowUpdateUserButton(user.Id,user.Prenom,user.Nom,user.Username,user.Email,user.Gender)">
                             <i class="fa fa-pen-to-square"></i>
                           </button>
                         </td>
@@ -131,6 +133,17 @@
                 @bind="newUserEmail">
             </div>
             <div class="form-group">
+              <label for="gender">Gender</label>
+              <select class="form-control"
+                id="gender"
+                @bind="newUserGender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label for="password">Password</label>
               <input type="password"
                 class="form-control"
@@ -204,6 +217,17 @@
                 placeholder="Enter email"
                 @bind="updateUserEmail">
             </div>
+            <div class="form-group">
+              <label for="update-gender">Gender</label>
+              <select class="form-control"
+                id="update-gender"
+                @bind="updateUserGender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
           </form>
         </div>
         <div class="modal-footer">
@@ -232,6 +256,9 @@
   private string updateUserUsername;
   private string updateUserEmail;
   private string updateUserId;
+  private string newUserGender;
+  private string updateUserGender;
+
 
   protected override async System.Threading.Tasks.Task OnInitializedAsync()
   {
@@ -279,7 +306,7 @@
   {
     try
     {
-      await UserService.CreateUser(newUserNom,newUserPrenom,newUserEmail,newUserPassword,newUserUsername);
+      await UserService.CreateUser(newUserNom, newUserPrenom, newUserEmail, newUserPassword, newUserUsername, newUserGender);
       users = await UserService.GetAllUsers();
       HideCreateUserModal();
       newUserNom = "";
@@ -287,6 +314,7 @@
       newUserEmail = "";
       newUserPassword = "";
       newUserUsername = "";
+      newUserGender = "";
     }
     catch (Exception ex)
     {
@@ -299,19 +327,22 @@
     {
 
       ShowUpdateUserModal();
-      var user = new UserModelUpdate(){
-        Nom = updateUserNom,
-        Prenom = updateUserPrenom,
-        Email = updateUserEmail,
-        Username = updateUserUsername
-      };
-      await UserService.UpdateUser(id,user);
+      var user = new UserModelUpdate()
+        {
+          Nom = updateUserNom,
+          Prenom = updateUserPrenom,
+          Email = updateUserEmail,
+          Username = updateUserUsername,
+          Gender = updateUserGender
+        };
+      await UserService.UpdateUser(id, user);
       users = await UserService.GetAllUsers();
       HideUpdateUserModal();
       updateUserNom = "";
       updateUserPrenom = "";
       updateUserEmail = "";
       updateUserUsername = "";
+      updateUserGender = "";
     }
     catch (Exception ex)
     {
@@ -336,12 +367,13 @@
   {
     showUpdateUserModal = false;
   }
-  private void ShowUpdateUserButton(string id, string prenom, string nom, string username, string email)
+  private void ShowUpdateUserButton(string id, string prenom, string nom, string username, string email, string gender)
   {
     updateUserNom = nom;
     updateUserPrenom = prenom;
     updateUserEmail = email;
     updateUserUsername = username;
+    updateUserGender = gender;
     updateUserId = id;
     showUpdateUserModal = true;
   }

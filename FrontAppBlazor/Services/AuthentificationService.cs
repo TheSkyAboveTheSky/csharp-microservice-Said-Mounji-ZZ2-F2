@@ -15,7 +15,7 @@ namespace FrontAppBlazor.Services
     }
     public async Task<User?> AuthenticateUser(string email, string password)
     {
-      var login = new UserLogin() { Email = email, Pass = password };
+      var login = new UserLogin() { Email = email, Password = password };
 
       HttpResponseMessage response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/user/login", login);
       if (response.IsSuccessStatusCode)
@@ -31,9 +31,9 @@ namespace FrontAppBlazor.Services
       }
       return null;
     }
-    public async Task<User?> RegisterUser(string prenom, string nom, string email, string password, string username)
+    public async Task<User?> RegisterUser(string prenom, string nom, string email, string password, string username, string gender)
     {
-      var registerInfo = new User(nom, prenom, email, password, username);
+      var registerInfo = new User(nom, prenom, email, password, username, gender);
       HttpResponseMessage response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/User/register", registerInfo);
       if (response.IsSuccessStatusCode)
       {

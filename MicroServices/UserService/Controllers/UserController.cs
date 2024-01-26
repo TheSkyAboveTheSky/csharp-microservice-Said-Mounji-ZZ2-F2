@@ -75,7 +75,7 @@ namespace UserService.Controllers
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(string id,User user)
+        public async Task<IActionResult> UpdateUser(string id, User user)
         {
             user.Id = id;
             _context.Entry(user).State = EntityState.Modified;
@@ -102,6 +102,14 @@ namespace UserService.Controllers
             {
                 userFromDb.Username = user.Username;
             }
+            if (user.Gender != null)
+            {
+                userFromDb.Gender = user.Gender;
+            }
+            if (user.Role != null)
+            {
+                userFromDb.Role = user.Role;
+            }
             _context.Entry(userFromDb).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -111,7 +119,7 @@ namespace UserService.Controllers
         {
             if (await IsEmailUnique(user.Email))
             {
-                user.Pass = _passwordHasher.HashPassword(user, user.Pass);
+                user.Password = _passwordHasher.HashPassword(user, user.Password);
 
                 _context.User.Add(user);
                 await _context.SaveChangesAsync();
@@ -138,7 +146,7 @@ namespace UserService.Controllers
                 return NotFound();
             }
 
-            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(userFromDb, userFromDb.Pass, userlogin.Pass);
+            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(userFromDb, userFromDb.Password, userlogin.Password);
 
             if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
