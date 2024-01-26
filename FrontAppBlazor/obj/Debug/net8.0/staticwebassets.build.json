@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "O/6hx6kHn9YD9Xb50IDmTIrXCqY+hh8Kba/wR8AqLDE=",
+  "Hash": "i/Q9JbHdC3Lqd2gK1D/bvxlzvLWHMw/RSDAt8tO1emc=",
   "Source": "FrontAppBlazor",
   "BasePath": "_content/FrontAppBlazor",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\signup.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\Swagger UI.pdf",
+      "SourceId": "FrontAppBlazor",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\",
+      "BasePath": "_content/FrontAppBlazor",
+      "RelativePath": "Swagger UI.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Swagger UI.pdf"
     }
   ]
 }

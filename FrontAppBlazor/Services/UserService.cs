@@ -136,9 +136,9 @@ namespace FrontAppBlazor.Services
                 Console.WriteLine($"An error occurred while loading users: {ex.Message}");
             }
         }
-        public async Task<User?> CreateUser(string prenom, string nom, string email, string password, string username,string gender)
+        public async Task<User?> CreateUser(string prenom, string nom, string email, string password, string username,string gender,int groupId,string role)
         {
-            var registerInfo = new User(nom, prenom, email, password, username,gender);
+            var registerInfo = new User(nom,prenom,email,password,username,gender,groupId,role);
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/User/register", registerInfo);
             if (response.IsSuccessStatusCode)
             {

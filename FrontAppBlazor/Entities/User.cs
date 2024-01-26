@@ -4,7 +4,7 @@ namespace FrontAppBlazor.Entities
 {
     public class User
     {
-        public User(string nom, string prenom, string email, string password, string username, string gender, int groupId = 0)
+        public User(string nom, string prenom, string email, string password, string username, string gender, int groupId = 0,string role = "User")
         {
             ValidatePassword(password);
             ValidateEmail(email);
@@ -15,7 +15,7 @@ namespace FrontAppBlazor.Entities
             Password = password;
             Username = username;
             Gender = gender;
-            Role = "User";
+            Role = role;
             GroupId = groupId;
         }
 

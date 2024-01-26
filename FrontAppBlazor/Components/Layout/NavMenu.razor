@@ -9,30 +9,21 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand"
-            href="">SM Tasks</a>
-        <button class="navbar-toggler @(NavButtonCssClass ?? "")"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-label="Toggle navigation"
+        <a class="navbar-brand" href="">SM Tasks</a>
+        <button class="navbar-toggler @(NavButtonCssClass ?? "")" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-label="Toggle navigation"
             @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse @(NavBarCssClass ?? "")"
-            id="navbarCollapse"
-            @onclick="ToggleNavMenu">
+        <div class="collapse navbar-collapse @(NavBarCssClass ?? "")" id="navbarCollapse" @onclick="ToggleNavMenu">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 @if (!isAuth)
                 {
                     <li class="nav-item">
-                        <NavLink class="nav-link"
-                            href="/signin">SIGN IN</NavLink>
+                        <NavLink class="nav-link" href="/signin"><i class="fas fa-sign-in-alt"></i> Sign In</NavLink>
                     </li>
                     <li class="nav-item">
-                        <NavLink class="nav-link"
-                            href="/signup">SIGN UP</NavLink>
+                        <NavLink class="nav-link" href="/signup"><i class="fas fa-user-plus"></i> Sign Up</NavLink>
                     </li>
                 }
                 else
@@ -40,46 +31,57 @@
                     @if (isAdmin)
                     {
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/mytasks">My TASKS</NavLink>
+                            <NavLink class="nav-link" href="/mytasks"><i class="fas fa-tasks"></i> My Tasks</NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/tasks">TASKS</NavLink>
+                            <NavLink class="nav-link" href="/tasks"><i class="fas fa-tasks"></i> Tasks</NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/myprojects">My PROJECTS</NavLink>
+                            <NavLink class="nav-link" href="/myprojects"><i class="fas fa-project-diagram"></i> My
+                                Projects</NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/projects">PROJECTS</NavLink>
+                            <NavLink class="nav-link" href="/projects"><i class="fas fa-project-diagram"></i>
+                                Projects</NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/users">USERS</NavLink>
+                            <NavLink class="nav-link" href="/users"><i class="fas fa-users"></i> Users</NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/logout"
-                                @onclick="Logout">LOGOUT</NavLink>
+                            <NavLink class="nav-link" href="/logout" @onclick="Logout"><i
+                                    class="fas fa-sign-out-alt"></i> Logout</NavLink>
                         </li>
-
+                    }
+                    else if (isProjectManager)
+                    {
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/mytasks"><i class="fas fa-tasks"></i> My Tasks</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/myprojects"><i class="fas fa-project-diagram"></i> My
+                                Projects</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/projects"><i class="fas fa-project-diagram"></i>
+                                Projects</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/logout" @onclick="Logout"><i
+                                    class="fas fa-sign-out-alt"></i> Logout</NavLink>
+                        </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/mytasks">My TASKS</NavLink>
+                            <NavLink class="nav-link" href="/mytasks"><i class="fas fa-tasks"></i> My Tasks</NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/myprojects">My PROJECTS</NavLink>
+                            <NavLink class="nav-link" href="/myprojects"><i class="fas fa-project-diagram"></i> My
+                                Projects</NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link"
-                                href="/logout"
-                                @onclick="Logout">LOGOUT</NavLink>
+                            <NavLink class="nav-link" href="/logout" @onclick="Logout"><i
+                                    class="fas fa-sign-out-alt"></i> Logout</NavLink>
                         </li>
                     }
                 }
@@ -89,12 +91,14 @@
 </nav>
 
 
+
 @code {
     private bool collapseNavMenu = true;
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
     private bool isAuth;
     private bool isAdmin;
+    private bool isProjectManager;
 
     private void ToggleNavMenu()
     {
@@ -107,6 +111,7 @@
         {
             isAuth = await JwtService.IsAuthenticated();
             isAdmin = await AuthentificationService.IsAdmin();
+            isProjectManager = await AuthentificationService.IsProjectManager();
             StateHasChanged();
         }
     }

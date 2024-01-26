@@ -84,5 +84,10 @@ namespace FrontAppBlazor.Services
       var role = await GetRole();
       return role == "Admin";
     }
+    public async Task<bool> IsProjectManager()
+    {
+      var role = await GetRole();
+      return role == "ProjectManager";
+    }
   }
 }

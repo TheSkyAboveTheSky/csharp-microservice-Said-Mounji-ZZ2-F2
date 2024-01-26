@@ -84,4 +84,4 @@ Bonus (non exhaustif) :
 - [X] Les données du second micro service sont persisté (base de donnée, fichier, ...)
 - [ ] Bonne qualité de code (bien indenté, lisible)
 - [ ] Vous avez un konami code
-- [ ] Vous ajoutez d'autres intéractions/fonctionalités
+- [X] Vous ajoutez d'autres intéractions/fonctionalités

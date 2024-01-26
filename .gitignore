@@ -1,2 +1,47 @@
+# Ignore Visual Studio temporary files, build results, and other generated files
+.vs/
+bin/
+obj/
 
-.fake
+# Ignore NuGet packages
+*.nuget.props
+*.nuget.targets
+*.lock.json
+paket-files/
+
+# Ignore user-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore build outputs
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.vspscc
+*.pidb
+*.ide
+
+# Ignore node_modules directory if you are using Node.js
+node_modules/
+
+# Ignore .NET Core artifacts
+bin/
+obj/
+*.dll
+*.exe
+
+# Ignore Visual Studio Code specific files
+.vscode/
+
+# Ignore packages folder
+packages/
+
+# Ignore Rider specific files
+.idea/
+
+# Ignore Mac specific files
+.DS_Store
