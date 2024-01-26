@@ -109,6 +109,10 @@ namespace UserService.Controllers
             {
                 userFromDb.Role = user.Role;
             }
+            if (user.GroupId != null)
+            {
+                userFromDb.GroupId = (int)user.GroupId;
+            }
             _context.Entry(userFromDb).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();

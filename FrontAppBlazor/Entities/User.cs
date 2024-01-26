@@ -2,9 +2,9 @@ using System.Text.RegularExpressions;
 
 namespace FrontAppBlazor.Entities
 {
-public class User
+    public class User
     {
-        public User(string nom, string prenom, string email, string password, string username,string gender)
+        public User(string nom, string prenom, string email, string password, string username, string gender, int groupId = 0)
         {
             ValidatePassword(password);
             ValidateEmail(email);
@@ -16,6 +16,7 @@ public class User
             Username = username;
             Gender = gender;
             Role = "User";
+            GroupId = groupId;
         }
 
         private string GenerateUserId()
@@ -51,6 +52,8 @@ public class User
         public string Username { get; set; }
         public string Gender { get; set; }
         public string Role { get; set; }
+        public int GroupId { get; set; }
+
     }
     public class UserLogin
     {
@@ -70,5 +73,7 @@ public class User
         public string? Username { get; set; }
         public string? Gender { get; set; }
         public string? Role { get; set; }
+        public int? GroupId { get; set; }
+
     }
 }

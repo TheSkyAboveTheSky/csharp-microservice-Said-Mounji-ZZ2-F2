@@ -49,7 +49,7 @@ dotnet add package System.IdentityModel.Tokens.Jwt
 
 # Séance 4 & 5
 
-- [ ] Finaliser la mise en place des différents micro services et de leur intéractions
+- [X] Finaliser la mise en place des différents micro services et de leur intéractions
 
 
 # Projet attendu 
@@ -80,7 +80,7 @@ La notation dépendra principalement des points suivants:
 Bonus (non exhaustif) :
 - [X] Vous avez rajoutez un champ rôle aux utilisateurs (basique, admin), ceci nécessite de faire une migration et de l'appliquer en base
 - [X] Vous affichez une page en plus sur le front en fonction du rôle de l'utilisateur (admin peux consulter la liste de tout les utilisateurs inscrit)
-- [ ] Gestion des erreurs, si le login/pass est invalide j'affiche un message. Si une requête a la gateway renvoi une erreur, elle est géré
+- [X] Gestion des erreurs, si le login/pass est invalide j'affiche un message. Si une requête a la gateway renvoi une erreur, elle est géré
 - [X] Les données du second micro service sont persisté (base de donnée, fichier, ...)
 - [ ] Bonne qualité de code (bien indenté, lisible)
 - [ ] Vous avez un konami code

@@ -34,6 +34,7 @@
                     <th class="w100">Email</th>
                     <th class="w100">Gender</th>
                     <th class="w100">Role</th>
+                    <th class="w100">Group</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -56,6 +57,19 @@
                         <td class="text-right">
                           <span class="badge @($"bg-{(user.Role == "Admin" ? "danger" : "primary")}")">@user.Role</span>
                         </td>
+                        <td class="text-right">
+                          @if (user.GroupId == 0)
+                          {
+                            <span class="badge bg-warning">Individual</span>
+                          }
+                          else
+                          {
+                            <span class="badge bg-primary">
+                              @($"Group {user.GroupId}")
+                            </span>
+                          }
+                        </td>
+
 
                         <td>
                           <button class="btn btn-sm"
@@ -65,7 +79,7 @@
                           </button>
                           <button class="btn btn-sm"
                             style="color: blue;"
-                            @onclick="() => ShowUpdateUserButton(user.Id, user.Prenom, user.Nom, user.Username, user.Email, user.Gender)">
+                            @onclick="() => ShowUpdateUserButton(user.Id, user.Prenom, user.Nom, user.Username, user.Email, user.Gender,user.GroupId)">
                             <i class="fa fa-pen-to-square"></i>
                           </button>
                           @if (user.Role == "User")
@@ -84,6 +98,11 @@
                               Remove as Admin
                             </button>
                           }
+                          <button class="btn btn-success"
+                            style=" margin: 1rem;"
+                            @onclick="() => ShowUpdateUserButton(user.Id, user.Prenom, user.Nom, user.Username, user.Email, user.Gender,user.GroupId)">
+                            Change The Group
+                          </button>
                         </td>
 
                       </tr>
@@ -92,7 +111,7 @@
                   else
                   {
                     <tr>
-                      <td colspan="5">No tasks found</td>
+                      <td colspan="7">No Users found</td>
                     </tr>
                   }
                 </tbody>
@@ -164,6 +183,19 @@
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="group">Group</label>
+              <select class="form-control"
+                id="group"
+                @bind="newGroupId">
+                <option value="">Select Group</option>
+                <option value="0">Individual</option>
+                <option value="1">Group 1</option>
+                <option value="2">Group 2</option>
+                <option value="3">Group 3</option>
+                <option value="4">Group 4</option>
               </select>
             </div>
 
@@ -251,6 +283,19 @@
                 <option value="Female">Female</option>
               </select>
             </div>
+            <div class="form-group">
+              <label for="update-group">Group</label>
+              <select class="form-control"
+                id="update-group"
+                @bind="updateGroupId">
+                <option value="">Select Group</option>
+                <option value="0">Individual</option>
+                <option value="1">Group 1</option>
+                <option value="2">Group 2</option>
+                <option value="3">Group 3</option>
+                <option value="4">Group 4</option>
+              </select>
+            </div>
 
           </form>
         </div>
@@ -282,6 +327,8 @@
   private string updateUserId;
   private string newUserGender;
   private string updateUserGender;
+  private int updateGroupId;
+  private int newGroupId;
 
 
   protected override async System.Threading.Tasks.Task OnInitializedAsync()
@@ -339,6 +386,7 @@
       newUserPassword = "";
       newUserUsername = "";
       newUserGender = "";
+      newGroupId = 0;
     }
     catch (Exception ex)
     {
@@ -357,7 +405,8 @@
           Prenom = updateUserPrenom,
           Email = updateUserEmail,
           Username = updateUserUsername,
-          Gender = updateUserGender
+          Gender = updateUserGender,
+          GroupId = updateGroupId,
         };
       await UserService.UpdateUser(id, user);
       users = await UserService.GetAllUsers();
@@ -367,6 +416,7 @@
       updateUserEmail = "";
       updateUserUsername = "";
       updateUserGender = "";
+      updateGroupId = 0;
     }
     catch (Exception ex)
     {
@@ -391,13 +441,16 @@
   {
     showUpdateUserModal = false;
   }
-  private void ShowUpdateUserButton(string id, string prenom, string nom, string username, string email, string gender)
+  private void ShowUpdateUserButton(string id, string prenom, string nom, string username, string email, string gender,
+  int
+  group)
   {
     updateUserNom = nom;
     updateUserPrenom = prenom;
     updateUserEmail = email;
     updateUserUsername = username;
     updateUserGender = gender;
+    updateGroupId = group;
     updateUserId = id;
     showUpdateUserModal = true;
   }
