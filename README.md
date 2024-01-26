@@ -36,7 +36,7 @@ Sur la gateway:
 Sur le micro service todo:
 - [X] Ne renvoyer que les todo de notre utilisateur
 - [X] Créer une classe TodoDb qui contiendra la liste des todos.
-- [ ] Ajouter la classe TodoDb dans le program.cs en tant que singleton
+- [ ] Ajouter la classe TodoDb dans le program.cs en tant que singleton ( j'ai travailler avec un tableau Sqlite)
 - [ ] Utiliser cette classe dans le service todo
 
 Vous aurez besoin de ces packages pour utiliser le JWT
@@ -82,6 +82,6 @@ Bonus (non exhaustif) :
 - [X] Vous affichez une page en plus sur le front en fonction du rôle de l'utilisateur (admin peux consulter la liste de tout les utilisateurs inscrit)
 - [X] Gestion des erreurs, si le login/pass est invalide j'affiche un message. Si une requête a la gateway renvoi une erreur, elle est géré
 - [X] Les données du second micro service sont persisté (base de donnée, fichier, ...)
-- [ ] Bonne qualité de code (bien indenté, lisible)
+- [ ] Bonne qualité de code (bien indenté, lisible) (a vous)
 - [ ] Vous avez un konami code
 - [X] Vous ajoutez d'autres intéractions/fonctionalités
