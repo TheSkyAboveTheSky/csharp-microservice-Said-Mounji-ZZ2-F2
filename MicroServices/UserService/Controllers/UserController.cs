@@ -86,7 +86,7 @@ namespace UserService.Controllers
         public async Task<IActionResult> PatchUser(string id, UserModelUpdate user)
         {
             var userFromDb = await _context.User.FindAsync(id);
-            if(user.Prenom != null)
+            if (user.Prenom != null)
             {
                 userFromDb.Prenom = user.Prenom;
             }

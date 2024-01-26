@@ -9,79 +9,82 @@
 @using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 
-<div class="section-body mt-3">
-  <div class="container-fluid">
-    <div class="tab-content">
-      <div class="tab-pane fade show active"
-        id="todo-list"
-        role="tabpanel">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between mb-3">
+<section class="vh-100"
+  style="background-color: white;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">My Task List</h4>
+
+            <div class="col-12 d-flex justify-content-between">
               <button class="btn btn-primary"
                 @onclick="ShowCreateTaskModal">Create New Task</button>
               <button class="btn btn-danger"
                 @onclick="DeleteAllTasks">Delete All Tasks</button>
             </div>
-            <div class="table-responsive todo_list">
-              <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="w100">Title</th>
-                    <th class="w100">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @if (tasks != null)
-                  {
-                    @foreach (var task in tasks)
-                    {
-                      <tr>
-                        <td>
-                          <label class="custom-control custom-checkbox">
-                            <input type="checkbox"
-                              class="custom-control-input"
-                              style="width: 2rem;"
-                              checked="@task.IsChecked"
-                              @onclick="() => ToggleTask(task)" />
-                            <span style="font-size: 1rem; color: black; @GetTextStyle(task)">@task.Id</span>
-                          </label>
 
-                        </td>
-                        <td class="text-right">@task.Titre</td>
-                        <td class="text-right">@task.Description</td>
-                        <td></td>
-                        <td>
-                          <button class="btn btn-sm"
-                            style="color: red; margin: 1rem;"
-                            @onclick="() => DeleteTask(task.Id)">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                          <button class="btn btn-sm"
-                            style="color: blue;"
-                            @onclick="() => ShowUpdateTaskButton(task.Id,task.Titre,task.Description)">
-                            <i class="fa fa-pen-to-square"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    }
-                  }
-                  else
+
+            <table class="table mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (tasks != null)
+                {
+                  var index = 1;
+                  @foreach (var task in tasks)
                   {
                     <tr>
-                      <td colspan="5">No tasks found</td>
+                      <th scope="row">@index</th>
+                      <td style="@GetTextStyle(task)">@task.Titre</td>
+                      <td style="@GetTextStyle(task)">@task.Description</td>
+                      <td>@(task.IsChecked ? "Completed" : "In Progress")</td>
+                      <td>
+                        <button type="submit"
+                          class="btn btn-danger"
+                          @onclick="() => DeleteTask(task.Id)">
+                          <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <button type="submit"
+                          class="btn btn-success ms-1"
+                          @onclick="() => ToggleTask(task)">
+                          <i class="fas fa-check"></i> Change State
+                        </button>
+                        <button type="submit"
+                          class="btn btn-primary ms-1"
+                          @onclick="() => ShowUpdateTaskButton(task.Id,task.Titre,task.Description)">
+                          <i class="fas fa-edit"></i> Edit
+                        </button>
+                      </td>
                     </tr>
+                    index++;
                   }
-                </tbody>
-              </table>
-            </div>
+                }
+                else
+                {
+                  <tr>
+                    <td colspan="5">No tasks found</td>
+                  </tr>
+                }
+
+              </tbody>
+            </table>
+
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 @if (showCreateTaskModal)
 {
   <div class="modal"

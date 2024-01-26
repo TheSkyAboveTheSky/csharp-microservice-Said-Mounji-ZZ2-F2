@@ -45,11 +45,11 @@
                                             </div>
                                         </div>
 
-
                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                             <button type="submit"
-                                                class="btn btn-primary btn-lg">Sign In</button>
+                                                class="btn btn-primary">Sign In</button>
                                         </div>
+
                                     </EditForm>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <a href="/signup"
@@ -96,7 +96,7 @@
 
             if (user != null)
             {
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/tasks");
                 await JSRuntime.InvokeVoidAsync("alert", "Login successful!");
             }
             else
