@@ -146,7 +146,7 @@
 
       if (user != null)
       {
-        NavigationManager.NavigateTo("/tasks");
+        NavigationManager.NavigateTo("/",forceLoad: true);
         await JSRuntime.InvokeVoidAsync("alert", "Register Successfully");
       }
       else

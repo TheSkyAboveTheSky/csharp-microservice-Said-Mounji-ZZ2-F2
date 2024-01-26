@@ -18,7 +18,7 @@ namespace FrontAppBlazor.Services
       _sessionStorage = sessionStorage;
     }
 
-    private const string Key = "YourSecretKeyLongLongLongLongEnough";
+    private const string Key = "SMTask";
 
     public async Task<string> GetAndVerifyTokenAsync()
     {

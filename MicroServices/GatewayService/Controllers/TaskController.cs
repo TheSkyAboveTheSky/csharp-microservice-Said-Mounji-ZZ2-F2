@@ -1,8 +1,5 @@
-using GatewayService.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System;
 
 namespace GatewayService.Controllers
 {
@@ -16,6 +13,9 @@ namespace GatewayService.Controllers
             client = new HttpClient();
             client.BaseAddress = new System.Uri("http://localhost:5002/");
         }
+        /// <summary>
+        /// Retrieves all tasks.
+        /// </summary>
         [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetAllTasks()
@@ -34,6 +34,10 @@ namespace GatewayService.Controllers
                 return BadRequest("GetAllTasks failed");
             }
         }
+        /// <summary>
+        /// Retrieves a task by ID.
+        /// </summary>
+        /// <param name="id">The ID of the task to retrieve.</param>
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTaskById(string id)
@@ -52,6 +56,10 @@ namespace GatewayService.Controllers
                 return BadRequest("GetTaskById failed");
             }
         }
+        /// <summary>
+        /// Retrieves all tasks by user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user whose tasks to retrieve.</param>
         [Authorize]
         [HttpGet("user/{userId}")]
         public async Task<ActionResult> GetTasksByUserId(string userId)
@@ -70,6 +78,10 @@ namespace GatewayService.Controllers
                 return BadRequest("GetTasksByUserId failed");
             }
         }
+        /// <summary>
+        /// Deletes all tasks.
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete]
         public async Task<ActionResult> DeleteAllTasks()
@@ -87,6 +99,11 @@ namespace GatewayService.Controllers
                 return BadRequest("DeleteAllTasks failed");
             }
         }
+        /// <summary>
+        /// Deletes a task by ID.
+        /// </summary>
+        /// <param name="id">The ID of the task to delete.</param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTaskById(string id)
@@ -104,6 +121,11 @@ namespace GatewayService.Controllers
                 return BadRequest("DeleteTaskById failed");
             }
         }
+        /// <summary>
+        /// Deletes all tasks by user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user whose tasks to delete.</param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete("user/{userId}")]
         public async Task<ActionResult> DeleteTasksByUserId(string userId)
@@ -121,6 +143,11 @@ namespace GatewayService.Controllers
                 return BadRequest("DeleteTasksByUserId failed");
             }
         }
+        /// <summary>
+        /// Creates a task.
+        /// </summary>
+        /// <param name="task">The task to create.</param>
+        /// <returns>The created task.</returns>
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> CreateTask(Entities.Task task)
@@ -138,6 +165,12 @@ namespace GatewayService.Controllers
                 return BadRequest("CreateTask failed");
             }
         }
+        /// <summary>
+        /// Updates a task.
+        /// </summary>
+        /// <param name="id">The ID of the task to update.</param>
+        /// <param name="task">The task to update.</param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateTask(string id, Entities.Task task)
@@ -155,6 +188,12 @@ namespace GatewayService.Controllers
                 return BadRequest("UpdateTask failed");
             }
         }
+        /// <summary>
+        /// Updates a task by ID.
+        /// </summary>
+        /// <param name="id">The ID of the task to update.</param>
+        /// <param name="task">The updated task data.</param>
+        /// <returns></returns>
         [Authorize]
         [HttpPatch("{id}")]
         public async Task<ActionResult> PatchTask(string id, TaskModelUpdate task)

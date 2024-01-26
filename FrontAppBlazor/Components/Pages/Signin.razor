@@ -82,6 +82,7 @@
             if (isAuth)
             {
                 NavigationManager.NavigateTo("/");
+
             }
         }
     }
@@ -96,7 +97,7 @@
 
             if (user != null)
             {
-                NavigationManager.NavigateTo("/tasks");
+                NavigationManager.NavigateTo("/", forceLoad: true);
                 await JSRuntime.InvokeVoidAsync("alert", "Login successful!");
             }
             else

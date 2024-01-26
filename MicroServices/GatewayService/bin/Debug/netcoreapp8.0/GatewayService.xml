@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GatewayService</name>
+    </assembly>
+    <members>
+        <member name="M:GatewayService.Controllers.TaskController.GetAllTasks">
+            <summary>
+            Retrieves all tasks.
+            </summary>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.GetTaskById(System.String)">
+            <summary>
+            Retrieves a task by ID.
+            </summary>
+            <param name="id">The ID of the task to retrieve.</param>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.GetTasksByUserId(System.String)">
+            <summary>
+            Retrieves all tasks by user ID.
+            </summary>
+            <param name="userId">The ID of the user whose tasks to retrieve.</param>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.DeleteAllTasks">
+            <summary>
+            Deletes all tasks.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.DeleteTaskById(System.String)">
+            <summary>
+            Deletes a task by ID.
+            </summary>
+            <param name="id">The ID of the task to delete.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.DeleteTasksByUserId(System.String)">
+            <summary>
+            Deletes all tasks by user ID.
+            </summary>
+            <param name="userId">The ID of the user whose tasks to delete.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.CreateTask(GatewayService.Entities.Task)">
+            <summary>
+            Creates a task.
+            </summary>
+            <param name="task">The task to create.</param>
+            <returns>The created task.</returns>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.UpdateTask(System.String,GatewayService.Entities.Task)">
+            <summary>
+            Updates a task.
+            </summary>
+            <param name="id">The ID of the task to update.</param>
+            <param name="task">The task to update.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GatewayService.Controllers.TaskController.PatchTask(System.String,GatewayService.Controllers.TaskController.TaskModelUpdate)">
+            <summary>
+            Updates a task by ID.
+            </summary>
+            <param name="id">The ID of the task to update.</param>
+            <param name="task">The updated task data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.GetAllUsers">
+            <summary>
+            Retrieves all users.
+            </summary>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.GetUserById(System.String)">
+            <summary>
+            Retrieves a user by ID.
+            </summary>
+            <param name="id">The ID of the user to retrieve.</param>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.DeleteAllUsers">
+            <summary>
+            Deletes all users.
+            </summary>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.DeleteUserById(System.String)">
+            <summary>
+            Deletes a user by ID.
+            </summary>
+            <param name="id">The ID of the user to delete.</param>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.UpdateUser(System.String,GatewayService.Entities.User)">
+            <summary>
+            Updates a user by ID.
+            </summary>
+            <param name="id">The ID of the user to update.</param>
+            <param name="user">The updated user data.</param>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.PatchUser(System.String,GatewayService.Entities.UserModelUpdate)">
+            <summary>
+            Partially updates a user by ID.
+            </summary>
+            <param name="id">The ID of the user to update.</param>
+            <param name="user">The updated user data.</param>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.CreateUser(GatewayService.Entities.User)">
+            <summary>
+            Registers a new user.
+            </summary>
+            <param name="user">The user data for registration.</param>
+        </member>
+        <member name="M:GatewayService.Controllers.UserController.LoginUser(GatewayService.Entities.UserLogin)">
+            <summary>
+            Logs in a user.
+            </summary>
+            <param name="userLogin">The user login data.</param>
+        </member>
+    </members>
+</doc>

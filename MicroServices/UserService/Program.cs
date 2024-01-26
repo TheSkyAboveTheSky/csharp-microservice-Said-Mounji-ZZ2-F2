@@ -10,8 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>();
-builder.Services.AddControllers();
 builder.Services.AddScoped<PasswordHasher<User>>();
+builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -25,9 +25,9 @@ builder.Services
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidAudience = "localhost:5000",
-            ValidIssuer = "TodoProject",
+            ValidIssuer = "SM Tasks",
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("YourSecretKeyLongLongLongLongEnough"))
+                Encoding.UTF8.GetBytes("SMTask"))
         };
     });
 

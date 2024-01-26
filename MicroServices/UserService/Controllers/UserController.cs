@@ -1,7 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -174,15 +173,16 @@ namespace UserService.Controllers
                 new Claim("UserId", userId)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecretKeyLongLongLongLongEnough"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SMTask"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: "TodoProject",
+                issuer: "SM Tasks",
                 audience: "localhost:5000",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(3000),
-                signingCredentials: creds);
+                signingCredentials: creds
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

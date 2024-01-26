@@ -1,8 +1,6 @@
 using GatewayService.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System;
 
 namespace GatewayService.Controllers
 {
@@ -16,6 +14,9 @@ namespace GatewayService.Controllers
       client = new HttpClient();
       client.BaseAddress = new System.Uri("http://localhost:5001/");
     }
+    /// <summary>
+    /// Retrieves all users.
+    /// </summary>
     [Authorize]
     [HttpGet]
     public async Task<ActionResult> GetAllUsers()
@@ -34,6 +35,10 @@ namespace GatewayService.Controllers
         return BadRequest("GetAllUsers failed");
       }
     }
+    /// <summary>
+    /// Retrieves a user by ID.
+    /// </summary>
+    /// <param name="id">The ID of the user to retrieve.</param>
     [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult> GetUserById(string id)
@@ -52,6 +57,9 @@ namespace GatewayService.Controllers
         return BadRequest("GetUserById failed");
       }
     }
+    /// <summary>
+    /// Deletes all users.
+    /// </summary>
     [Authorize]
     [HttpDelete]
     public async Task<ActionResult> DeleteAllUsers()
@@ -69,6 +77,10 @@ namespace GatewayService.Controllers
         return BadRequest("DeleteAllUsers failed");
       }
     }
+    /// <summary>
+    /// Deletes a user by ID.
+    /// </summary>
+    /// <param name="id">The ID of the user to delete.</param>
     [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUserById(string id)
@@ -86,6 +98,11 @@ namespace GatewayService.Controllers
         return BadRequest("DeleteUserById failed");
       }
     }
+    /// <summary>
+    /// Updates a user by ID.
+    /// </summary>
+    /// <param name="id">The ID of the user to update.</param>
+    /// <param name="user">The updated user data.</param>
     [Authorize]
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateUser(string id, User user)
@@ -103,6 +120,11 @@ namespace GatewayService.Controllers
         return BadRequest("UpdateUser failed");
       }
     }
+    /// <summary>
+    /// Partially updates a user by ID.
+    /// </summary>
+    /// <param name="id">The ID of the user to update.</param>
+    /// <param name="user">The updated user data.</param>
     [Authorize]
     [HttpPatch("{id}")]
     public async Task<ActionResult> PatchUser(string id, UserModelUpdate user)
@@ -120,6 +142,10 @@ namespace GatewayService.Controllers
         return BadRequest("PatchUser failed");
       }
     }
+    /// <summary>
+    /// Registers a new user.
+    /// </summary>
+    /// <param name="user">The user data for registration.</param>
     [HttpPost("register")]
     public async Task<ActionResult> CreateUser(User user)
     {
@@ -137,6 +163,10 @@ namespace GatewayService.Controllers
         return BadRequest("CreateUser failed");
       }
     }
+    /// <summary>
+    /// Logs in a user.
+    /// </summary>
+    /// <param name="userLogin">The user login data.</param>
     [HttpPost("login")]
     public async Task<ActionResult> LoginUser(UserLogin userLogin)
     {
