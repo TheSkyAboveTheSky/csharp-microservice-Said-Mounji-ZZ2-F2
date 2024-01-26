@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\custom.js",
+      "PackagePath": "staticwebassets\\custom.js"
+    },
+    {
       "Id": "C:\\Users\\Geek Store\\Desktop\\code\\csharp-microservice-Said-Mounji-ZZ2-F2\\FrontAppBlazor\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },

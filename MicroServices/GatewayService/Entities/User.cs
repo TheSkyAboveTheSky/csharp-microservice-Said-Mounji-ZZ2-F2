@@ -15,6 +15,7 @@ namespace GatewayService.Entities
             Password = password;
             UserName = username;
             Gender = gender;
+            Role = "User";
         }
         private string GenerateUserId()
         {

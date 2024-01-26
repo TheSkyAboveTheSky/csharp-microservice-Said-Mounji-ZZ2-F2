@@ -1,6 +1,5 @@
 using FrontAppBlazor.Entities;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using System.Net.Http;
 
 namespace FrontAppBlazor.Services
 {
@@ -41,8 +40,8 @@ namespace FrontAppBlazor.Services
         var result = await response.Content.ReadFromJsonAsync<UserToken>();
         if (result != null)
         {
-          await _sessionStorage.SetAsync("jwt", result.Token);
-          await _sessionStorage.SetAsync("id", result.User.Id.ToString());
+          await _sessionStorage.SetAsync("jwt", result.Token );
+          await _sessionStorage.SetAsync("id", result.User.Id.ToString() );
           await _sessionStorage.SetAsync("role", result.User.Role.ToString());
 
           return result.User;
@@ -64,7 +63,7 @@ namespace FrontAppBlazor.Services
     public async Task<String> GetToken()
     {
       var token = await _sessionStorage.GetAsync<string>("jwt");
-      return token.Value;
+      return token.Value ;
     }
     public async Task<String> GetRole()
     {

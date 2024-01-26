@@ -44,9 +44,9 @@ builder.Services
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidAudience = "localhost:5000",
-            ValidIssuer = "TodoProject",
+            ValidIssuer = "SM Tasks",
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("YourSecretKeyLongLongLongLongEnough"))
+                Encoding.UTF8.GetBytes("SaidMounjiTokenKey"))
         };
     });
 
